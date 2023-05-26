@@ -45,7 +45,7 @@ export default function ComponentsPage() {
         <Typography variant='h3'>Mama is here</Typography>
         <Typography
           variant='h4'
-          className='font-medium text-sm leading-[1.25rem]'
+          className='text-sm font-medium leading-[1.25rem]'
         >
           Mama is here
         </Typography>

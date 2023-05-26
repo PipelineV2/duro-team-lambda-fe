@@ -76,7 +76,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           ],
           //#endregion  //*======== Variants ===========
           'disabled:cursor-not-allowed',
-          isFullwidth && 'w-full text-center flex justify-center items-center',
+          isFullwidth && 'flex w-full items-center justify-center text-center',
           isLoading &&
             'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
           className
