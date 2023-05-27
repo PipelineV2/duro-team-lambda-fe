@@ -22,15 +22,13 @@ import UnstyledLink from '@/components/links/UnstyledLink';
 import NextImage from '@/components/NextImage';
 import Seo from '@/components/Seo';
 import Skeleton from '@/components/Skeleton';
+import Typography from '@/components/text/Text';
 
 type Color = (typeof colorList)[number];
 
 export default function ComponentsPage() {
-  const [mode, setMode] = React.useState<'dark' | 'light'>('light');
+  const [mode] = React.useState<'dark' | 'light'>('light');
   const [color, setColor] = React.useState<Color>('sky');
-  function toggleMode() {
-    return mode === 'dark' ? setMode('light') : setMode('dark');
-  }
 
   const textColor = mode === 'dark' ? 'text-gray-300' : 'text-gray-600';
 
@@ -42,6 +40,20 @@ export default function ComponentsPage() {
       />
 
       <main>
+        <Typography variant='h1'>Mama is here</Typography>
+        <Typography variant='h2'>Mama is here</Typography>
+        <Typography variant='h3'>Mama is here</Typography>
+        <Typography
+          variant='h4'
+          className='text-sm font-medium leading-[1.25rem]'
+        >
+          Mama is here
+        </Typography>
+        <Typography variant='small'>Mama is small</Typography>
+        <Typography variant='body1'>Mama is body1</Typography>
+        <Typography variant='body2'>Mama is body2</Typography>
+        <Typography variant='button'>Mama is button</Typography>
+        <Typography variant='secondary'>Mama is secondary</Typography>
         <section
           className={clsx(mode === 'dark' ? 'bg-dark' : 'bg-white', color)}
         >
@@ -56,16 +68,6 @@ export default function ComponentsPage() {
               Back to Home
             </ArrowLink>
 
-            <div className='mt-8 flex flex-wrap gap-2'>
-              <Button
-                onClick={toggleMode}
-                variant={mode === 'dark' ? 'light' : 'dark'}
-              >
-                Set to {mode === 'dark' ? 'light' : 'dark'}
-              </Button>
-              {/* <Button onClick={randomize}>Randomize CSS Variable</Button> */}
-            </div>
-
             <ol className='mt-8 space-y-6'>
               <li className='space-y-2'>
                 <h2 className='text-lg md:text-xl'>Customize Colors</h2>
@@ -77,6 +79,7 @@ export default function ComponentsPage() {
                   <select
                     name='color'
                     id='color'
+                    title='color'
                     value={color}
                     className={clsx(
                       'block max-w-xs rounded',
@@ -214,14 +217,12 @@ export default function ComponentsPage() {
                   </ButtonLink>
                   <ButtonLink
                     variant='outline'
-                    isDarkBg={mode === 'dark'}
                     href='https://theodorusclarence.com'
                   >
                     Outline Variant
                   </ButtonLink>
                   <ButtonLink
                     variant='ghost'
-                    isDarkBg={mode === 'dark'}
                     href='https://theodorusclarence.com'
                   >
                     Ghost Variant
@@ -247,14 +248,8 @@ export default function ComponentsPage() {
                 </p>
                 <div className='flex flex-wrap gap-2'>
                   <Button variant='primary'>Primary Variant</Button>
-                  <Button variant='outline' isDarkBg={mode === 'dark'}>
-                    Outline Variant
-                  </Button>
-                  <Button variant='ghost' isDarkBg={mode === 'dark'}>
-                    Ghost Variant
-                  </Button>
-                  <Button variant='dark'>Dark Variant</Button>
-                  <Button variant='light'>Light Variant</Button>
+                  <Button variant='secondary'>Outline Variant</Button>
+                  <Button variant='text'>Ghost Variant</Button>
                 </div>
                 <div className='flex flex-wrap gap-2'>
                   <Button
@@ -265,30 +260,14 @@ export default function ComponentsPage() {
                     Icon
                   </Button>
                   <Button
-                    variant='outline'
-                    leftIcon={HiPlus}
-                    rightIcon={HiArrowRight}
-                    isDarkBg={mode === 'dark'}
-                  >
-                    Icon
-                  </Button>
-                  <Button
-                    variant='ghost'
-                    leftIcon={HiPlus}
-                    rightIcon={HiArrowRight}
-                    isDarkBg={mode === 'dark'}
-                  >
-                    Icon
-                  </Button>
-                  <Button
-                    variant='dark'
+                    variant='secondary'
                     leftIcon={HiPlus}
                     rightIcon={HiArrowRight}
                   >
                     Icon
                   </Button>
                   <Button
-                    variant='light'
+                    variant='text'
                     leftIcon={HiPlus}
                     rightIcon={HiArrowRight}
                   >
@@ -296,29 +275,19 @@ export default function ComponentsPage() {
                   </Button>
                 </div>
                 <div className='!mt-4 flex flex-wrap gap-2'>
-                  <Button size='sm' variant='primary'>
+                  <Button size='small' variant='primary' isFullwidth>
                     Small Size
                   </Button>
-                  <Button
-                    size='sm'
-                    variant='outline'
-                    isDarkBg={mode === 'dark'}
-                  >
+                  <Button size='small' variant='secondary'>
                     Small Size
                   </Button>
-                  <Button size='sm' variant='ghost' isDarkBg={mode === 'dark'}>
-                    Small Size
-                  </Button>
-                  <Button size='sm' variant='dark'>
-                    Small Size
-                  </Button>
-                  <Button size='sm' variant='light'>
+                  <Button size='small' variant='text'>
                     Small Size
                   </Button>
                 </div>
                 <div className='flex flex-wrap gap-2'>
                   <Button
-                    size='sm'
+                    size='small'
                     variant='primary'
                     leftIcon={HiPlus}
                     rightIcon={HiArrowRight}
@@ -326,35 +295,16 @@ export default function ComponentsPage() {
                     Icon
                   </Button>
                   <Button
-                    size='sm'
-                    variant='outline'
-                    leftIcon={HiPlus}
-                    rightIcon={HiArrowRight}
-                    isDarkBg={mode === 'dark'}
-                  >
-                    Icon
-                  </Button>
-                  <Button
-                    size='sm'
-                    variant='ghost'
-                    leftIcon={HiPlus}
-                    rightIcon={HiArrowRight}
-                    isDarkBg={mode === 'dark'}
-                  >
-                    Icon
-                  </Button>
-
-                  <Button
-                    size='sm'
-                    variant='dark'
+                    size='small'
+                    variant='secondary'
                     leftIcon={HiPlus}
                     rightIcon={HiArrowRight}
                   >
                     Icon
                   </Button>
                   <Button
-                    size='sm'
-                    variant='light'
+                    size='small'
+                    variant='text'
                     leftIcon={HiPlus}
                     rightIcon={HiArrowRight}
                   >
@@ -366,16 +316,10 @@ export default function ComponentsPage() {
                   <Button disabled variant='primary'>
                     Disabled
                   </Button>
-                  <Button disabled variant='outline' isDarkBg={mode === 'dark'}>
+                  <Button disabled variant='text'>
                     Disabled
                   </Button>
-                  <Button disabled variant='ghost' isDarkBg={mode === 'dark'}>
-                    Disabled
-                  </Button>
-                  <Button disabled variant='dark'>
-                    Disabled
-                  </Button>
-                  <Button disabled variant='light'>
+                  <Button disabled variant='text'>
                     Disabled
                   </Button>
                 </div>
@@ -383,20 +327,10 @@ export default function ComponentsPage() {
                   <Button isLoading variant='primary'>
                     Disabled
                   </Button>
-                  <Button
-                    isLoading
-                    variant='outline'
-                    isDarkBg={mode === 'dark'}
-                  >
+                  <Button isLoading variant='secondary'>
                     Disabled
                   </Button>
-                  <Button isLoading variant='ghost' isDarkBg={mode === 'dark'}>
-                    Disabled
-                  </Button>
-                  <Button isLoading variant='dark'>
-                    Disabled
-                  </Button>
-                  <Button isLoading variant='light'>
+                  <Button isLoading variant='text'>
                     Disabled
                   </Button>
                 </div>
