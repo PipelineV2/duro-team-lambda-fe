@@ -56,7 +56,9 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
+      "eslint src --fix",
       "eslint --max-warnings=0",
+      "yarn format",
       "prettier -w"
     ],
     "**/*.{json,css,scss,md,webmanifest}": [
