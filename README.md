@@ -1,25 +1,42 @@
-# Next.js + Tailwind CSS + TypeScript Starter and Boilerplate
+# Duro | Simple, Effective, and Affordable way to manage virtual queues
+
+Duro is a virtual queue management system that allows customers to make an appointment and join a virtual queue by scanning a QR code or sending SMS to a mobile number. Customers are assigned a spot on the queue and receive tailored communication (SMS or notifications) to ensure they get in, only when it's their turn. The QR code and mobile phone number are displayed visibly and outside the premises.
+
+The system can be configured for these to change on a routine (e.g daily or hourly), and can use geo-fencing. This way, the business can decide to prohibit people from saving a spot friends until they show up at the premises.
+
+Duro is a solution to the problem of crowded waiting rooms, jumping the queue, and disgruntled customers putting pressure on maxed-out staff. It is a simple and effective way to manage virtual queues, and it can be customized to meet the needs of any business.
+
+Here are some of the benefits of using Duro:
+
+Reduced wait times: Duro can help to reduce wait times by up to 50%. This is because customers are assigned a spot on the queue and are notified when it is their turn.
+Improved customer satisfaction: Duro can help to improve customer satisfaction by reducing wait times and providing customers with a more personalized experience.
+Increased efficiency: Duro can help businesses to increase efficiency by reducing the amount of time that staff spend managing queues.
+If you are looking for a solution to the problem of crowded waiting rooms, Duro is a great option. It is a simple, effective, and affordable way to manage virtual queues.
 
 <div align="center">
-  <h2>🔋 ts-nextjs-tailwind-starter</h2>
-  <p>Next.js + Tailwind CSS + TypeScript starter packed with useful development features.</p>
-  <p>Made by <a href="https://theodorusclarence.com">Theodorus Clarence</a></p>
-
-[![GitHub Repo stars](https://img.shields.io/github/stars/theodorusclarence/ts-nextjs-tailwind-starter)](https://github.com/theodorusclarence/ts-nextjs-tailwind-starter/stargazers)
-[![Depfu](https://badges.depfu.com/badges/fc6e730632ab9dacaf7df478a08684a7/overview.svg)](https://depfu.com/github/theodorusclarence/ts-nextjs-tailwind-starter?project_id=30160)
-[![Last Update](https://img.shields.io/badge/deps%20update-every%20sunday-blue.svg)](https://shields.io/)
+  ![Landing Page](https://github.com/PipelineV2/duro-team-lambda-fe/assets/26861798/d32f2752-3f7b-474f-9b97-b1ae6bc7c62c)
 
 </div>
 
 ## Features
 
-This repository is 🔋 battery packed with:
+- 💎 QR code scanning: Customers can scan a QR code to join the queue.
+- 💎 SMS: Customers can join the queue by sending an SMS to a mobile number.
+- 💎 Geo-fencing: The system can be configured to use geo-fencing to prevent customers from saving a spot before they arrive at the premises.
+- 💎 Tailored communication: Customers can receive tailored communication (SMS or notifications) to ensure they get in, only when it’s their turn.
+- 💎 Queue management: The system can be used to manage queues of any size.
+- 💎 Customization: The system can be customized to meet the needs of any business.
+- 💎 Affordability: Duro is an affordable solution for businesses of all sizes.
+
+These are just a few of the features that make Duro a powerful and versatile virtual queue management system. If you are looking for a way to reduce wait times, improve customer satisfaction, and increase efficiency, Duro is a great option.
+
+## Built with
 
 - ⚡️ Next.js 13
 - ⚛️ React 18
 - ✨ TypeScript
 - 💨 Tailwind CSS 3 — Configured with CSS Variables to extend the **primary** color
-- 💎 Pre-built Components — Components that will **automatically adapt** with your brand color, [check here for the demo](https://tsnext-tw.thcl.dev/components)
+
 - 🃏 Jest — Configured for unit testing
 - 📈 Absolute Import and Path Alias — Import components using `@/` prefix
 - 📏 ESLint — Find and fix problems in your code, also will **auto sort** your imports
@@ -34,45 +51,20 @@ This repository is 🔋 battery packed with:
 - 🗺 Site Map — Automatically generate sitemap.xml
 - 📦 Expansion Pack — Easily install common libraries, additional components, and configs
 
-See the 👉 [feature details and changelog](https://github.com/theodorusclarence/ts-nextjs-tailwind-starter/blob/main/CHANGELOG.md) 👈 for more.
-
-You can also check all of the **details and demos** on my blog post:
-
-- [One-stop Starter to Maximize Efficiency on Next.js & Tailwind CSS Projects](https://theodorusclarence.com/blog/one-stop-starter)
-
 ## Getting Started
 
-### 1. Clone this template using one of the three ways:
+### 1. Clone the repo:
 
-1. Use this repository as template
-
-   **Disclosure:** by using this repository as a template, there will be an attribution on your repository.
-
-   I'll appreciate if you do, so this template can be known by others too 😄
-
-   ![Use as template](https://user-images.githubusercontent.com/55318172/129183039-1a61e68d-dd90-4548-9489-7b3ccbb35810.png)
-
-2. Using `create-next-app`
-
-   ```bash
-   npx create-next-app -e https://github.com/theodorusclarence/ts-nextjs-tailwind-starter project-name
-   ```
-
-3. Using `degit`
-
-   ```bash
-   npx degit theodorusclarence/ts-nextjs-tailwind-starter YOUR_APP_NAME
-   ```
-
-4. Deploy to Vercel
-
-   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter)
+```
+git clone https://github.com/PipelineV2/duro-team-lambda-fe.git
+```
 
 ### 2. Install dependencies
 
 It is encouraged to use **yarn** so the husky hooks can work properly.
 
 ```bash
+cd duro-team-lambda-fe
 yarn install
 ```
 
@@ -86,37 +78,6 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. You can start editing the page by modifying `src/pages/index.tsx`.
 
-### 4. Change defaults
+### 4. Refer to the BE API documentation
 
-There are some things you need to change including title, urls, favicons, etc.
-
-Find all comments with !STARTERCONF, then follow the guide.
-
-Don't forget to change the package name in package.json
-
-### 5. Commit Message Convention
-
-This starter is using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/), it is mandatory to use it to commit changes.
-
-## Projects using ts-nextjs-tailwind-starter
-
-<!--
-TEMPLATE
-- [sitename](https://sitelink.com) ([Source](https://github.com/githublink))
-- [sitename](https://sitelink.com)
--->
-
-- [theodorusclarence.com](https://theodorusclarence.com) ([Source](https://github.com/theodorusclarence/theodorusclarence.com))
-- [Notiolink](https://notiolink.thcl.dev/) ([Source](https://github.com/theodorusclarence/notiolink))
-
-Are you using this starter? Please add your page (and repo) to the end of the list via a [Pull Request](https://github.com/theodorusclarence/ts-nextjs-tailwind-starter/edit/main/README.md). 😃
-
-## Expansion Pack 📦
-
-This starter is now equipped with an [expansion pack](https://github.com/theodorusclarence/expansion-pack).
-
-You can easily add expansion such as React Hook Form + Components, Storybook, and more just using a single command line.
-
-https://user-images.githubusercontent.com/55318172/146631994-e1cac137-1664-4cfe-950b-a96decc1eaa6.mp4
-
-Check out the [expansion pack repository](https://github.com/theodorusclarence/expansion-pack) for the commands
+`src/firebase/apis/README.md` - [HERE](src/firebase/apis/README.md)
