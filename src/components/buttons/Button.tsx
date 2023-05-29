@@ -26,7 +26,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled: buttonDisabled,
       isLoading,
       variant = 'primary',
-      size = 'base',
+      size = 'small',
       isFullwidth = false,
       leftIcon: LeftIcon,
       rightIcon: RightIcon,
@@ -100,15 +100,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {LeftIcon && (
           <div
             className={clsxm([
-              size === 'base' && 'mr-1',
-              size === 'sm' && 'mr-1.5',
+              size === 'small' && 'mr-1',
+              size === 'large' && 'mr-1.5',
             ])}
           >
             <LeftIcon
               className={clsxm(
                 [
-                  size === 'base' && 'md:text-md text-md',
-                  size === 'sm' && 'md:text-md text-sm',
+                  size === 'small' && 'md:text-md text-md',
+                  size === 'large' && 'md:text-md text-sm',
                 ],
                 leftIconClassName
               )}
@@ -119,15 +119,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {RightIcon && (
           <div
             className={clsxm([
-              size === 'base' && 'ml-1',
-              size === 'sm' && 'ml-1.5',
+              size === 'small' && 'ml-1',
+              size === 'large' && 'ml-1.5',
             ])}
           >
             <RightIcon
               className={clsxm(
                 [
-                  size === 'base' && 'text-md md:text-md',
-                  size === 'sm' && 'md:text-md text-sm',
+                  size === 'small' && 'text-md md:text-md',
+                  size === 'large' && 'md:text-md text-sm',
                 ],
                 rightIconClassName
               )}

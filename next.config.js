@@ -25,6 +25,8 @@ const nextConfig = {
           options: {
             typescript: true,
             icon: true,
+            // babel: false,
+            ext: 'tsx',
           },
         },
       ],
