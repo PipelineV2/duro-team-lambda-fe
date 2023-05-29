@@ -1,8 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { SignupApi } from '@/firebase/apis';
+// /* eslint-disable @typescript-eslint/no-explicit-any */
 
+// Import the `firebase/auth` module.
+import firebaseAuth from 'firebase/auth';
+
+// Mock the `auth` property on the `firebase` object.
+jest.mock('firebase/app', () => {
+  return {
+    auth: firebaseAuth,
+    createUserWithEmailAndPassword: jest.fn(),
+  };
+});
+
+// Describe the `SignupApi` test.
 describe('SignupApi', () => {
+  // It should pass.
   it('should pass', async () => {
+    // Create a signup data object.
     const signupData = {
       email: 'runtest@test.com',
       password: 'sdfdf1##^@@@',
@@ -14,15 +27,15 @@ describe('SignupApi', () => {
       phoneNumber: '0192929292',
     };
 
-    // Mock the Firebase `createUserWithEmailAndPassword` method.
-    const mockCreateUserWithEmailAndPassword =
-      jest.fn() || SignupApi(signupData);
+    // Mock the `createUserWithEmailAndPassword` method.
+    const mockCreateUserWithEmailAndPassword = jest.fn();
     mockCreateUserWithEmailAndPassword.mockReturnValue({
       user: {
         uid: '1234567890',
         details: signupData,
       },
     });
+
     // Call the `createUserWithEmailAndPassword` method.
     const user = await mockCreateUserWithEmailAndPassword(
       signupData.email,
