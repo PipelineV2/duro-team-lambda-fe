@@ -29,8 +29,8 @@ export default function HomePage() {
 
       <main>
         <div className='layout relative flex  flex-col items-center justify-center py-12 text-center'>
-          <Duro className='h-[33px] w-[84px] text-5xl' />
-          <DashboardIcon className='h-[33px] w-[33px] text-5xl' color='pink' />
+          <Duro className='text-5xl' />
+          <DashboardIcon className=' text-5xl' color='pink' />
           <h1 className='mt-4'>Next.js + Tailwind CSS + TypeScript Starter</h1>
           <p className='mt-2 text-sm text-gray-800'>
             A starter for Next.js, Tailwind CSS, and TypeScript with Absolute
