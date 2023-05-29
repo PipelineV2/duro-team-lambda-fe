@@ -1,10 +1,39 @@
 // !STARTERCONF You can delete this page
 import * as React from 'react';
 
+import logger from '@/lib/logger';
+
+import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 
+import { SignupApi } from '@/firebase/apis';
+
 export default function ComponentsPage() {
+  logger({ NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY });
+
+  const handleForm = async () => {
+    const data = await SignupApi({
+      email: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      businessName: '',
+      industry: '',
+      employeeSize: '',
+      phoneNumber: '',
+    });
+
+    logger(data);
+    // if (error) {
+    //     return console.log(error)
+    // }
+
+    // // else successful
+    // console.log(result)
+    // return router.push("/admin")
+  };
+
   return (
     <Layout>
       <Seo
@@ -12,6 +41,9 @@ export default function ComponentsPage() {
         description='Pre-built components with awesome default'
       />
 
+      <Button size='small' variant='secondary' onClick={handleForm}>
+        Small Size
+      </Button>
       {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
         <Typography variant='h2'>Mama is here</Typography>
