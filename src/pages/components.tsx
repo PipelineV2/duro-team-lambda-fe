@@ -1,37 +1,10 @@
 // !STARTERCONF You can delete this page
-import clsx from 'clsx';
 import * as React from 'react';
-import {
-  HiArrowRight,
-  HiOutlineCreditCard,
-  HiOutlineDesktopComputer,
-  HiOutlineDeviceMobile,
-  HiOutlineShieldCheck,
-  HiPlus,
-} from 'react-icons/hi';
 
-import Button from '@/components/buttons/Button';
-import IconButton from '@/components/buttons/IconButton';
-import TextButton from '@/components/buttons/TextButton';
 import Layout from '@/components/layout/Layout';
-import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
-import PrimaryLink from '@/components/links/PrimaryLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
-import NextImage from '@/components/NextImage';
 import Seo from '@/components/Seo';
-import Skeleton from '@/components/Skeleton';
-import Typography from '@/components/text/Text';
-
-type Color = (typeof colorList)[number];
 
 export default function ComponentsPage() {
-  const [mode] = React.useState<'dark' | 'light'>('light');
-  const [color, setColor] = React.useState<Color>('sky');
-
-  const textColor = mode === 'dark' ? 'text-gray-300' : 'text-gray-600';
-
   return (
     <Layout>
       <Seo
@@ -39,7 +12,7 @@ export default function ComponentsPage() {
         description='Pre-built components with awesome default'
       />
 
-      <main>
+      {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
         <Typography variant='h2'>Mama is here</Typography>
         <Typography variant='h3'>Mama is here</Typography>
@@ -394,32 +367,7 @@ export default function ComponentsPage() {
             </ol>
           </div>
         </section>
-      </main>
+      </main> */}
     </Layout>
   );
 }
-
-const colorList = [
-  'slate',
-  'gray',
-  'zinc',
-  'neutral',
-  'stone',
-  'red',
-  'orange',
-  'amber',
-  'yellow',
-  'lime',
-  'green',
-  'emerald',
-  'teal',
-  'cyan',
-  'sky',
-  'blue',
-  'indigo',
-  'violet',
-  'purple',
-  'fuchsia',
-  'pink',
-  'rose',
-] as const;
