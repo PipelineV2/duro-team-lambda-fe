@@ -4,14 +4,13 @@
 /node_modules
 /.pnp
 .pnp.js
-
+/src/pages/index_api.tsx
 # testing
 /coverage
-
 # next.js
 /.next/
 /out/
-
+/src/firebase/apis/README copy.md
 # production
 /build
 

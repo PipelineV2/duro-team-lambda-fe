@@ -3,10 +3,11 @@ import { useRouter } from 'next/router';
 
 // !STARTERCONF Change these default meta
 const defaultMeta = {
-  title: 'Next.js + Tailwind CSS + TypeScript Starter',
-  siteName: 'Next.js + Tailwind CSS + TypeScript Starter',
+  title:
+    'Duro | Simple, Effective, and Affordable way to manage virtual queues',
+  siteName: 'Duro',
   description:
-    'A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky',
+    'Duro is a virtual queue management system that helps businesses to reduce wait times, improve customer satisfaction, and increase efficiency.',
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
   url: 'https://tsnext-tw.thcl.dev',
   type: 'website',
@@ -75,7 +76,7 @@ export default function Seo(props: SeoProps) {
           <meta
             name='author'
             property='article:author'
-            content='Theodorus Clarence'
+            content='Team Lambda (talentQL Pipeleine) Cohort II'
           />
         </>
       )}
