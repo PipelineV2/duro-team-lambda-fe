@@ -5,13 +5,12 @@ import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
+import Select from '@/components/select/Select';
 import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
 
 export default function ComponentsPage() {
-  logger({ NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY });
-
   const handleForm = async () => {
     const data = await SignupApi({
       email: '',
@@ -42,8 +41,14 @@ export default function ComponentsPage() {
       />
 
       <Button size='small' variant='secondary' onClick={handleForm}>
-        Small Size
+        Small Sizes
       </Button>
+      <Select
+        label='Industry'
+        placeholder='Select Work email'
+        // error='this is an error'
+        options={['Banking', 'Dancing']}
+      />
       {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
         <Typography variant='h2'>Mama is here</Typography>
