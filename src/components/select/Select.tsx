@@ -26,7 +26,9 @@ const Select = (props: ISelectProps) => {
       </label>
       <div className='relative w-full'>
         <select
-          title='select'
+          title={label}
+          id={label}
+          name={label}
           className={clsxm(
             'w-full appearance-none caret-transparent',
             'border-gray2 text-grey1 rounded border px-4 py-3 text-base  disabled:cursor-not-allowed',

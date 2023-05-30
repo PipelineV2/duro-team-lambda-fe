@@ -5,7 +5,7 @@ import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
-import Select from '@/components/select/Select';
+import Select from '@/components/select';
 import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
