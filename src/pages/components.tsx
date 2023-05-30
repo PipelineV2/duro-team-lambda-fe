@@ -4,6 +4,7 @@ import * as React from 'react';
 import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
+import Info from '@/components/info';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 
@@ -44,6 +45,7 @@ export default function ComponentsPage() {
       <Button size='small' variant='secondary' onClick={handleForm}>
         Small Size
       </Button>
+      <Info text='Use your work email for smooth integrations and use' />
       {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
         <Typography variant='h2'>Mama is here</Typography>
