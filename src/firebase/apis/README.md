@@ -36,7 +36,7 @@ The `SignupApi` function is used to sign up a new user.
 
 **Returns:**
 
-A promise that resolves with the following object:
+An email is sent to the registered account for verification and a promise that resolves with the following object:
 
 ```
   {
@@ -50,37 +50,147 @@ A promise that resolves with the following object:
   }
 ```
 
+## Signin
+
+**SigninApi()**
+
+**Description:**
+
+The `SigninApi` function is used to sign in a registered user.
+
+**Parameters:**
+
+```
+  email: string;
+  password: string;
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    token?: string;
+    message: string;
+  }
+```
+
+## Signout
+
+**SignoutApi()**
+
+**Description:**
+
+The `SignoutApi` function is used to sign out a registered user. No paramter is required nor any response expected. Upon a successful signout, the user loses access to protected routes.
+
+## Reset Password
+
+**ResetPasswordApi()**
+
+**Description:**
+
+The `ResetPasswordApi` function is used to send email to a registered user who has lost access to his/her account and want to retrieve such account. The email contains details to enable account owner re-set the account details accordingly.
+
+**Parameters:**
+
+```
+  newPassword: string
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+  }
+```
+
+## Change Password
+
+**ChangePasswordApi()**
+
+**Description:**
+
+The `ChangePasswordApi` function is used to change the password of registered account. The account owner must be logged in to be able to use this api else it will fail.
+
+**Parameters:**
+
+```
+  email: string;
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+  }
+```
+
+## User Data
+
+**UserDetailsApi()**
+
+**Description:**
+
+The `UserDetailsApi` function is used retrieve a particular registered user data from the databse. The account owner must be logged in to be able to use this api else it will fail. It takes no parameter.
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    token?: string;
+    message: string;
+    userData?: {
+      uid: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+      phoneNumber: string;
+      businessName: string;
+      industry: string;
+      employeeSize: string;
+      emailVerified: boolean;
+    };
+  }
+```
+
+NB: the userData object will be different for the customers.
+
 **Status:**
 
 The status of the sign up request. Possible values are:
 
-- 201 - The sign up request was successful.
-- 400 - The sign up request failed.
-
-**Token:**
-
-The JWT token of the user. This token can be used to authenticate the user with the API.
-
-**Message:**
-
-A message describing the status of the sign up request.
-
-**UserData:**
-
-An object containing the following user data:
-
-- email: The email address of the user.
-- businessName: The business name of the user.
+- 201 - resource successfully created.
+- 200 - resource successfully retrieved/sent.
+- 400 - failed request.
+- 401 - not authorized/ fail to authenticate user.
+- 404 - resource not found.
 
 **Example:**
 
 ```
 
-import { SignupApi } from '@/firebase/apis';
+import { ChangePasswordApi, SigninApi, SignupApi, SignoutApi, UserDetailsApi } from '@/firebase/apis';
 ...
+<!-- signup -->
 const signup = async () => {
   const data = {
-    email: 'test@testing'.com',
+    email: 'test@testing.com',
     password: 'testdf111@@@',
     firstName: 'Test',
     lastName: 'Business',
@@ -93,4 +203,37 @@ const signup = async () => {
   console.log(res, 'signup');
   // pass res into your state or context
 };
+
+<!-- signin -->
+const signin = async () => {
+  const data = {
+    email: 'test@testing.com',
+    password: 'testdf111@@@',
+  };
+  const res = await SigninApi(data);
+  console.log(res, 'signin');
+  // pass res into your state or context
+};
+
+<!-- signout -->
+const signout = async () => {
+  SignoutApi();
+  // redirect user to non-protected screen e.g. login
+};
+
+<!-- resetPassword -->
+const sendResetpasswordEmail = async () => {
+  const res = await ResetPasswordApi('test@testing.com');
+  console.log(res, 'reset password');
+};
+
+<!-- changePassword -->
+const changepassword = async () => {
+  const res = await ChangePasswordApi('sds*&%kNN');
+  console.log(res, 'change password');
+};
+
+<!-- userData -->
+UserDetailsApi().then((res) => console.log(res));
+
 ```
