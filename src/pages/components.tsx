@@ -5,6 +5,7 @@ import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
+import Progress from '@/components/progress';
 import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
@@ -44,6 +45,9 @@ export default function ComponentsPage() {
       <Button size='small' variant='secondary' onClick={handleForm}>
         Small Size
       </Button>
+      <div className='w-[90%] max-w-[420px]'>
+        <Progress currentStep={1} totalStep={3} />
+      </div>
       {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
         <Typography variant='h2'>Mama is here</Typography>
