@@ -13,10 +13,7 @@ Improved customer satisfaction: Duro can help to improve customer satisfaction b
 Increased efficiency: Duro can help businesses to increase efficiency by reducing the amount of time that staff spend managing queues.
 If you are looking for a solution to the problem of crowded waiting rooms, Duro is a great option. It is a simple, effective, and affordable way to manage virtual queues.
 
-<div align="center">
-  ![Landing Page](https://github.com/PipelineV2/duro-team-lambda-fe/assets/26861798/d32f2752-3f7b-474f-9b97-b1ae6bc7c62c)
-
-</div>
+![Landing Page](https://github.com/PipelineV2/duro-team-lambda-fe/assets/26861798/d32f2752-3f7b-474f-9b97-b1ae6bc7c62c)
 
 ## Features
 
