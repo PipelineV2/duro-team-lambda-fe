@@ -4,14 +4,13 @@ import * as React from 'react';
 import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
+import Input from '@/components/input';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
 
 export default function ComponentsPage() {
-  logger({ NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY });
-
   const handleForm = async () => {
     const data = await SignupApi({
       email: '',
@@ -42,8 +41,14 @@ export default function ComponentsPage() {
       />
 
       <Button size='small' variant='secondary' onClick={handleForm}>
-        Small Size
+        Small Sizes
       </Button>
+      <Input
+        label='Work Email'
+        placeholder='Work email'
+        error='this is an error'
+        type='password'
+      />
       {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
         <Typography variant='h2'>Mama is here</Typography>

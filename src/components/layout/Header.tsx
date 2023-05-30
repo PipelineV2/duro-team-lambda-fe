@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import Button from '@/components/buttons/Button';
-import { useDate } from '@/components/layout/useDate';
 import Typography from '@/components/text/Text';
 
+import { useDate } from './useDate';
 import { strings } from '../../constant/strings';
 
 import ChatIcon from '~/svg/ChatIcon.svg';
@@ -24,23 +24,17 @@ export default function Header() {
           <nav>
             <ul className='flex items-center justify-between space-x-4'>
               <li>
-                {' '}
                 <button type='button' role='button' title='Search Icon'>
-                  {' '}
                   <SearchIcon className='text-[32px]' />
                 </button>
               </li>
               <li>
-                {' '}
                 <button type='button' role='button' title='Notification Icon'>
-                  {' '}
                   <NotificationIcon className='text-[32px]' />
                 </button>
               </li>
               <li>
-                {' '}
                 <button type='button' role='button' title='User icon'>
-                  {' '}
                   <Usericon className='text-[56px]' />
                 </button>
               </li>
