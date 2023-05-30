@@ -5,6 +5,7 @@ import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
+import FormModal from '@/components/modal/FormModal';
 import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
@@ -44,6 +45,14 @@ export default function ComponentsPage() {
       <Button size='small' variant='secondary' onClick={handleForm}>
         Small Size
       </Button>
+
+      <FormModal
+        title='New Schedule'
+        name='schedule'
+        label='Schedule name'
+        placeholder='Normal hours, holiday hours etc...'
+        value='Something here'
+      />
       {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
         <Typography variant='h2'>Mama is here</Typography>
