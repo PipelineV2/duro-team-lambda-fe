@@ -92,6 +92,7 @@
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
   }
+  /* `bg-[conic-gradient(var(--tw-gradient-stops))] from-[#FFA500]  to-[#E0E0E0]`, */
 }
 
 @layer utilities {
