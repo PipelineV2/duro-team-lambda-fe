@@ -5,6 +5,9 @@ import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
 
+import Info from '@/components/info';
+
+
 import CircularProgress from '@/components/circular-progress';
 
 import Calendar from '@/components/calendar';
@@ -49,6 +52,8 @@ export default function ComponentsPage() {
       <Button size='small' variant='secondary' onClick={handleForm}>
         Small Size
       </Button>
+
+      <Info text='Use your work email for smooth integrations and use' />
 
 
       <CircularProgress progress={50} />
