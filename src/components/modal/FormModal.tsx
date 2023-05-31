@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from '@/components/buttons/Button';
+import Input from '@/components/input';
 import Typography from '@/components/text/Text';
 
 interface Props {
@@ -27,21 +28,28 @@ const FormModal: React.FC<Props> = ({
 
         <div className=' grid'>
           <form action='' className=' grid'>
-            <label htmlFor={name}>
+            {/* <label htmlFor={name}>
               <Typography
                 variant='secondary'
                 className='text-grey3 mb-[0.5rem]'
               >
                 {label}
               </Typography>
-            </label>
-            <input
+            </label> */}
+            {/* <input
               type='text'
               className=' border-dark mb-[2rem] rounded-md border placeholder:text-sm'
               placeholder={placeholder}
               value={value}
+            /> */}
+            <Input
+              type='text'
+              value={value}
+              name={name}
+              label={label}
+              placeholder={placeholder}
+              className=' border-dark mb-[2rem] rounded-md border placeholder:text-sm'
             />
-
             <Button variant='primary' className=' mb-[1rem]' isFullwidth={true}>
               Create Schedule
             </Button>
