@@ -4,13 +4,14 @@ import * as React from 'react';
 import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
+import Calendar from '@/components/calendar';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
-
 export default function ComponentsPage() {
   logger({ NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY });
+  const [startdate, setStartDate] = React.useState<Date | null>(new Date());
 
   const handleForm = async () => {
     const data = await SignupApi({
@@ -40,10 +41,11 @@ export default function ComponentsPage() {
         templateTitle='Components'
         description='Pre-built components with awesome default'
       />
-
       <Button size='small' variant='secondary' onClick={handleForm}>
         Small Size
       </Button>
+      <p>{new Date(startdate as Date).toISOString()}</p>
+      <Calendar selectedDate={startdate} onChange={setStartDate} />
       {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
         <Typography variant='h2'>Mama is here</Typography>
