@@ -4,13 +4,28 @@ import * as React from 'react';
 import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
+
+import Info from '@/components/info';
+
+
+import CircularProgress from '@/components/circular-progress';
+
+import Calendar from '@/components/calendar';
+
 import Layout from '@/components/layout/Layout';
+
 import Select from '@/components/select';
+
+import Progress from '@/components/progress';
+
 import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
-
 export default function ComponentsPage() {
+
+
+  const [startdate, setStartDate] = React.useState<Date | null>(new Date());
+
   const handleForm = async () => {
     const data = await SignupApi({
       email: '',
@@ -39,16 +54,31 @@ export default function ComponentsPage() {
         templateTitle='Components'
         description='Pre-built components with awesome default'
       />
-
       <Button size='small' variant='secondary' onClick={handleForm}>
         Small Sizes
       </Button>
+
       <Select
         label='Industry'
         placeholder='Select Work email'
         // error='this is an error'
         options={['Banking', 'Dancing']}
       />
+
+      <div className='w-[90%] max-w-[420px]'>
+        <Progress currentStep={1} totalStep={3} />
+      </div>
+
+
+      <Info text='Use your work email for smooth integrations and use' />
+
+
+      <CircularProgress progress={50} />
+
+      <p>{new Date(startdate as Date).toISOString()}</p>
+      <Calendar selectedDate={startdate} onChange={setStartDate} />
+
+
       {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
         <Typography variant='h2'>Mama is here</Typography>
