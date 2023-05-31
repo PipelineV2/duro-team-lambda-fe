@@ -1,6 +1,6 @@
-import { useRef } from 'react';
 // export default DatePicker;
 import React from 'react';
+import { useRef } from 'react';
 import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -25,7 +25,7 @@ const Calendar = (props: Props) => {
         selected={selectedDate}
         onChange={onChange}
         showPopperArrow
-        className='text-grey3 border-grey4 z-10  rounded  border py-[5px] pl-10 text-sm'
+        className='text-grey3 border-grey4 z-10 w-full rounded border py-[5px] pl-10 text-sm'
         dateFormat='d MMM, yyyy'
         ref={dateRef}
       />

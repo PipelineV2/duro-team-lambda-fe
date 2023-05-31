@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { doc, setDoc } from '@firebase/firestore';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from 'firebase/auth';
 
 import { auth, db } from '@/firebase/FirebaseStore';
 
@@ -20,6 +24,7 @@ type returnDataProps = {
   userData?: {
     email: string;
     businessName: string;
+    emailVerified: boolean;
   };
 };
 
@@ -36,7 +41,6 @@ const SignupApi = async ({
 }: signupProps): Promise<returnDataProps | string | undefined> => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const user: any = res.user;
     let returnData;
     if (user) {
@@ -55,16 +59,21 @@ const SignupApi = async ({
         },
         { merge: true }
       ).then(() => {
+        const currentUser: any = auth.currentUser;
+        sendEmailVerification(currentUser).then(() => {
+          // Email verification sent!
+          // ...
+        });
         returnData = {
           status: 201,
           message: 'signup successful',
           token: user.accessToken,
           userData: {
-            email: email,
-            businessName: businessName,
+            email,
+            businessName,
+            // emailVerified: user.emailVerified,
           },
         };
-        // return returnData;
       });
     }
     return returnData;

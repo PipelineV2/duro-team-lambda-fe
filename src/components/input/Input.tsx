@@ -63,7 +63,7 @@ const Input = (props: IInputProps) => {
         {type === 'password' && (
           <button
             onClick={handleTogglePasswordVisibility}
-            className='absolute right-4 top-3'
+            className='absolute right-4 top-3 h-6 w-6'
           >
             {isPasswordShown ? (
               <EyeCrossedIcon className='text-green text-2xl' />
@@ -72,6 +72,7 @@ const Input = (props: IInputProps) => {
             )}
           </button>
         )}
+        {error && <p className='text-red text-xs'>{error}</p>}
       </div>
     </div>
   );

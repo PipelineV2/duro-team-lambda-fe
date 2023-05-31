@@ -47,7 +47,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'inline-flex items-center rounded font-medium',
           'focus-visible:ring-green focus:outline-none focus-visible:ring',
           'shadow-sm',
-          'transition-colors duration-75',
+          'text-center transition-colors  duration-75',
           //#region  //*=========== Size ===========
           [
             size === 'large' && ['px-3 py-[14px]', 'text-sm md:text-sm'],
