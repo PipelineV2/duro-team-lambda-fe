@@ -5,12 +5,16 @@ import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
 
+import Input from '@/components/input';
+
+
 import Info from '@/components/info';
 
 
 import CircularProgress from '@/components/circular-progress';
 
 import Calendar from '@/components/calendar';
+
 
 import Layout from '@/components/layout/Layout';
 
@@ -22,6 +26,7 @@ import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
 export default function ComponentsPage() {
+
 
 
   const [startdate, setStartDate] = React.useState<Date | null>(new Date());
@@ -54,9 +59,19 @@ export default function ComponentsPage() {
         templateTitle='Components'
         description='Pre-built components with awesome default'
       />
+      
+      <div className='w-[90%] max-w-[420px]'>
       <Button size='small' variant='secondary' onClick={handleForm}>
         Small Sizes
       </Button>
+
+      <Input
+        label='Work Email'
+        placeholder='Work email'
+        error='this is an error'
+        type='password'
+      />
+
 
       <Select
         label='Industry'
@@ -65,9 +80,8 @@ export default function ComponentsPage() {
         options={['Banking', 'Dancing']}
       />
 
-      <div className='w-[90%] max-w-[420px]'>
         <Progress currentStep={1} totalStep={3} />
-      </div>
+    
 
 
       <Info text='Use your work email for smooth integrations and use' />
@@ -78,6 +92,7 @@ export default function ComponentsPage() {
       <p>{new Date(startdate as Date).toISOString()}</p>
       <Calendar selectedDate={startdate} onChange={setStartDate} />
 
+  </div>
 
       {/* <main>
         <Typography variant='h1'>Mama is here</Typography>
