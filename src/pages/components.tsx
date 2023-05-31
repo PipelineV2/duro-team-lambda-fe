@@ -13,6 +13,7 @@ import CircularProgress from '@/components/circular-progress';
 import Calendar from '@/components/calendar';
 
 import Layout from '@/components/layout/Layout';
+import Progress from '@/components/progress';
 import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
@@ -52,6 +53,11 @@ export default function ComponentsPage() {
       <Button size='small' variant='secondary' onClick={handleForm}>
         Small Size
       </Button>
+
+      <div className='w-[90%] max-w-[420px]'>
+        <Progress currentStep={1} totalStep={3} />
+      </div>
+
 
       <Info text='Use your work email for smooth integrations and use' />
 
