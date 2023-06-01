@@ -171,6 +171,187 @@ A promise that resolves with the following object:
 
 NB: the userData object will be different for the customers.
 
+---
+
+## Dashboard
+
+**DashboardApiApi()**
+
+**Description:**
+
+The `DashboardApiApi` gets dashboard data. It takes no parameter.
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+    data?: {
+      queueLength: number;
+      attendedTo: number;
+      leftQueue: number;
+      queueProgress: number;
+      totalVisits: [];
+    };
+  }
+```
+
+## Settings
+
+**SettingsApi()**
+
+**Description:**
+
+The `SettingsApi` gets dashboard data. It takes no parameter.
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+    data?: {
+      phoneNumber: string;
+      geofenceData: {
+        lat: number;
+        long: number;
+        workingRadius: number;
+        radiusUnit: string;
+      }[];
+      link: string;
+    };
+  }
+```
+
+## Availability
+
+**AvailabilityApi()**
+
+**Description:**
+
+The `AvailabilityApi` gets dashboard data. It takes no parameter.
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+    data?: {
+      subscribed: boolean;
+      openingHour: string;
+      closingHour: string;
+      currentOperationStatus: {
+        operation: boolean;
+        break: boolean;
+        closed: boolean;
+      }[];
+      workingDays: {
+        monday: boolean;
+        tuesday: boolean;
+        wednesday: boolean;
+        thursday: boolean;
+        friday: boolean;
+        saturday: boolean;
+        sunday: boolean;
+      }[];
+    };
+  }
+```
+
+## Queue
+
+**QueueApi()**
+
+**Description:**
+
+The `QueueApi` gets dashboard data. It takes no parameter.
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+    queueArray?: {
+      date: string;
+      ticketNo: number;
+      name: string;
+      purpose: string;
+      phoneNumber: string;
+      status: number;
+    }[];
+  }
+```
+
+---
+
+## Create Queue
+
+**JoinQueueApi()**
+
+**Description:**
+
+The `JoinQueueApi` function is POST method that allow vendor's clients/customers to join the queue.
+
+**Parameters:**
+
+```
+  name: string;
+  purpose: string;
+  phoneNumber: string;
+  formLink: string; // unique to every organization
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+    queueNumber?: number;
+  }
+```
+
+## Create Queue
+
+**UpdateQueueApi()**
+
+**Description:**
+
+The `UpdateQueueApi` function is POST method that allow vendor to update the queue status per client/customer.
+
+**Parameters:**
+
+```
+  ticketNo: string;
+  value: number; // 0 - onQueue; 1 - inProgress; 2 - done
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+  }
+```
+
 **Status:**
 
 The status of the sign up request. Possible values are:
@@ -180,12 +361,18 @@ The status of the sign up request. Possible values are:
 - 400 - failed request.
 - 401 - not authorized/ fail to authenticate user.
 - 404 - resource not found.
+- 409 - resource already exist.
 
 **Example:**
 
 ```
 
-import { ChangePasswordApi, SigninApi, SignupApi, SignoutApi, UserDetailsApi } from '@/firebase/apis';
+import { ChangePasswordApi, SigninApi, SignupApi, SignoutApi, UserDetailsApi,
+ResetPasswordApi,
+JoinQueueApi, UpdateQueueApi,
+DashboardApi, QueueApi,
+AvailabilityApi, SettingsApi
+ } from '@/firebase/apis';
 ...
 <!-- signup -->
 const signup = async () => {
@@ -235,5 +422,35 @@ const changepassword = async () => {
 
 <!-- userData -->
 UserDetailsApi().then((res) => console.log(res));
+
+<!-- create Queue -->
+const joinQueueData = {
+  name: 'Bade lange',
+  purpose: 'Personal matter',
+  phoneNumber: '393677794',
+  formLink: 'Quid-5wef43',
+};
+
+JoinQueueApi(joinQueueData).then((res) => console.log(res, 'join queue result'));
+
+Protected Pages(Dashboard, Queue, Availability, Settings and Others)
+
+signin()
+  .then(() => {
+<!-- Updating Queue on the Dashboard -->
+    UpdateQueueApi({ ticketNo: '8rkwu', value: 2 }).then((res) =>
+       console.log(res)
+    );
+<!-- Queue Screen -->
+    QueueApi().then((res) => console.log(res));
+    DashboardApi().then((res) => console.log(res));
+<!-- Get User Data -->
+    UserDetailsApi().then((res) => console.log(res));
+<!-- Availability Screen -->
+    AvailabilityApi().then((res) => console.log(res));
+ <!-- Settings Screen -->
+    SettingsApi().then((res) => console.log(res));
+  })
+  .catch((err) => console.log(err));
 
 ```
