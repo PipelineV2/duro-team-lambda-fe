@@ -6,28 +6,8 @@ import {
 } from 'firebase/auth';
 
 import { auth, db } from '@/firebase/FirebaseStore';
-
-type signupProps = {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  businessName: string;
-  industry: string;
-  employeeSize: string;
-  phoneNumber: string;
-};
-type returnDataProps = {
-  status: number;
-  token?: string;
-  message: string;
-  userData?: {
-    email: string;
-    businessName: string;
-    emailVerified: boolean;
-  };
-};
-
+import { generateRandomCharacters } from '@/utils';
+import { signupProps, signupReturnDataProps } from '@/utils/types';
 // Signup Auth
 const SignupApi = async ({
   email,
@@ -38,7 +18,7 @@ const SignupApi = async ({
   industry,
   employeeSize,
   phoneNumber,
-}: signupProps): Promise<returnDataProps | string | undefined> => {
+}: signupProps): Promise<signupReturnDataProps | string | undefined> => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user: any = res.user;
@@ -55,15 +35,46 @@ const SignupApi = async ({
           phoneNumber: phoneNumber,
           businessName: businessName,
           industry: industry,
+          formLink: `${businessName}-${generateRandomCharacters(6)}`,
           employeeSize: employeeSize,
+          subscribed: false,
+          openingHour: '8:00 am',
+          closingHour: '6:00 pm',
+          currentOperationStatus: [
+            {
+              operation: true,
+              break: false,
+              closed: false,
+            },
+          ],
+          workingDays: [
+            {
+              monday: true,
+              tuesday: true,
+              wednesday: true,
+              thursday: true,
+              friday: true,
+              saturday: false,
+              sunday: false,
+            },
+          ],
+          geofenceData: [
+            {
+              lat: 6.5243793,
+              long: 3.3792057,
+              workingRadius: 2,
+              radiusUnit: 'km',
+            },
+          ],
         },
         { merge: true }
-      ).then(() => {
+      ).then(async () => {
         const currentUser: any = auth.currentUser;
         sendEmailVerification(currentUser).then(() => {
           // Email verification sent!
           // ...
         });
+
         returnData = {
           status: 201,
           message: 'signup successful',

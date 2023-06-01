@@ -2,15 +2,11 @@
 import { signOut, updatePassword } from 'firebase/auth';
 
 import { auth } from '@/firebase/FirebaseStore';
-
-type returnDataProps = {
-  status: number;
-  message: string;
-};
+import { changeReturnDataProps } from '@/utils/types';
 
 const ChangePasswordApi = async (
   newPassword: string
-): Promise<returnDataProps | string | undefined> => {
+): Promise<changeReturnDataProps | string | undefined> => {
   try {
     const currentUser: any = auth.currentUser;
     if (currentUser) {
