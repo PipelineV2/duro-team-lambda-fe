@@ -2,24 +2,14 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '@/firebase/FirebaseStore';
-
-type signinProps = {
-  email: string;
-  password: string;
-};
-type returnDataProps = {
-  status: number;
-  token?: string;
-  message: string;
-  emailVerified?: boolean;
-};
+import { signinProps, signinReturnDataProps } from '@/utils/types';
 
 // Signup Auth
 const SigninApi = async ({
   email,
   password,
-}: signinProps): Promise<returnDataProps | undefined> => {
-  let returnData: returnDataProps | undefined;
+}: signinProps): Promise<signinReturnDataProps | undefined> => {
+  let returnData: signinReturnDataProps | undefined;
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
 
