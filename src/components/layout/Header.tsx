@@ -46,15 +46,19 @@ export default function Header() {
         <Typography variant='body2' className='text-grey3 mr-12'>
           {TRIAL_PERIOD_TEXT}
         </Typography>
-        <Button variant='primary'>Subscribe now</Button>
+        <Button
+          variant='primary'
+          onClick={() => undefined}
+          text='Subscribe now'
+        />
         <Button
           variant='secondary'
           rightIcon={ChatIcon}
+          onClick={() => undefined}
           rightIconClassName='w-5 h-5 ml-2.5'
           className='text-grey3 border-grey3 ml-2'
-        >
-          Chat now
-        </Button>
+          text='Chat now'
+        />
       </div>
     </>
   );
