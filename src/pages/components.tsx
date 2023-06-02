@@ -4,6 +4,13 @@ import * as React from 'react';
 import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
+import Button from '@/components/buttons';
+import Calendar from '@/components/calendar';
+import Card from '@/components/card';
+
+import { Chart } from '@/components/chart/Chart';
+
+import CircularProgress from '@/components/circular-progress';
 import Info from '@/components/info';
 import Input from '@/components/input';
 import Layout from '@/components/layout/Layout';
@@ -15,6 +22,8 @@ import Table from '@/components/Table';
 import { SignupApi } from '@/firebase/apis';
 
 import data from '../utils/data.json';
+import ClockIcon from '~/svg/ClockIcon.svg';
+
 export default function ComponentsPage() {
   const handleForm = async () => {
     const data = await SignupApi({
@@ -59,6 +68,21 @@ export default function ComponentsPage() {
           onClick={handleForm}
           text='Small Sizes'
         />
+      <Card label='Attended to' stat='20 mins' icon={ClockIcon} />
+      <div className='h-[200px] w-[400px]'>
+        <Chart />
+      </div>
+ 
+
+      <Button
+        size='small'
+        variant='secondary'
+        onClick={handleForm}
+        text='Small Sizes'
+      />
+
+
+      <div className='grid w-[90%] max-w-[420px] gap-2'>
         <Input
           label='Work Email'
           placeholder='Work email'
