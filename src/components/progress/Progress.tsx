@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import clsxm from '@/lib/clsxm';
 
 type Props = {
   currentStep: number;
   totalStep: number;
+  className?: string | undefined;
+  style?: CSSProperties;
 };
 
 const Progress = (props: Props) => {
-  const { currentStep, totalStep } = props;
+  const { currentStep, totalStep, className, style } = props;
   if (currentStep > totalStep) {
     return null;
   }
   return (
-    <div>
+    <div className={className} style={style}>
       <div className='mb-2 flex h-1 w-full gap-2'>
         {Array.from(Array(totalStep), (e, i) => i + 1).map((item) => (
           <div
