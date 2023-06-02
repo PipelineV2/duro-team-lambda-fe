@@ -10,18 +10,21 @@ const ButtonSize = ['small', 'large'] as const;
 type ButtonProps = {
   isLoading?: boolean;
   isFullwidth?: boolean;
-  variant?: (typeof ButtonVariant)[number];
+  variant: (typeof ButtonVariant)[number];
   size?: (typeof ButtonSize)[number];
   leftIcon?: IconType;
   rightIcon?: IconType;
   leftIconClassName?: string;
   rightIconClassName?: string;
+  onClick: () => void;
+  text: string;
 } & React.ComponentPropsWithRef<'button'>;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
+      text,
       className,
       disabled: buttonDisabled,
       isLoading,
@@ -115,7 +118,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             />
           </div>
         )}
-        {children}
+        {children || text}
         {RightIcon && (
           <div
             className={clsxm([

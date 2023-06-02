@@ -1,5 +1,6 @@
-import clsx from 'clsx';
 import React, { CSSProperties, ReactNode } from 'react';
+
+import clsxm from '@/lib/clsxm';
 
 const TextVariant = [
   'h1',
@@ -50,15 +51,15 @@ export default Typography;
 
 const useTextVariant = (variant: (typeof TextVariant)[number]) => {
   const style = {
-    h1: clsx('font-bold text-[3.5rem] leading-[4.75rem]'),
-    h2: clsx('font-bold text-[3rem] leading-[4.1875rem]'),
-    h3: clsx('font-semibold text-[2rem] leading-[2.8125rem]'),
-    h4: clsx('font-medium text-2xl leading-[2.125rem]'),
-    small: clsx('font-medium text-2xl leading-[1.25rem]'),
-    button: clsx('font-medium text-sm leading-[1.25rem]'),
-    secondary: clsx('text-xs leading-[1.0625rem]'),
-    body2: clsx('text-base leading-[1.375rem]'),
-    body1: clsx('text-xl leading-[1.75rem]'),
+    h1: clsxm('font-bold text-[3rem] md:text-[3.5rem]  leading-[4.75rem]'),
+    h2: clsxm('font-bold text-[2.5rem] md:text-[3rem] leading-[4.1875rem]'),
+    h3: clsxm('font-semibold text-[1.5rem] md:text-[2rem] leading-[2.8125rem]'),
+    h4: clsxm('font-medium text-2xl leading-[2.125rem]'),
+    small: clsxm('font-medium text-2xl leading-[1.25rem]'),
+    button: clsxm('font-medium text-sm leading-[1.25rem]'),
+    secondary: clsxm('text-xs leading-[1.0625rem]'),
+    body2: clsxm('text-base leading-[1.375rem]'),
+    body1: clsxm('text-xl leading-[1.75rem]'),
   };
 
   return style[variant];
