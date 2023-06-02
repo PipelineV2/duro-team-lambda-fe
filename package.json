@@ -19,6 +19,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.9.1",
     "clsx": "^1.2.1",
     "firebase": "^9.22.1",
     "next": "^13.4.3",
