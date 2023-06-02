@@ -1,0 +1,29 @@
+[
+  {
+    "id": "33",
+    "date": "2023-06-02",
+    "ticketNo": "A001",
+    "name": "John Doe",
+    "purpose": "Inquiry",
+    "phoneNumber": "+2348123456789",
+    "status": "1"
+  },
+  {
+    "id": "39",
+    "date": "2023-06-02",
+    "ticketNo": "A002",
+    "name": "Jane Smith",
+    "purpose": "Payment",
+    "phoneNumber": "+2348098765432",
+    "status": "2"
+  },
+  {
+    "id": "390",
+    "date": "2023-06-02",
+    "ticketNo": "A002",
+    "name": "Jane Smith",
+    "purpose": "Payment",
+    "phoneNumber": "+2348098765432",
+    "status": "0"
+  }
+]
