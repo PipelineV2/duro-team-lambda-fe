@@ -3,9 +3,12 @@ import * as React from 'react';
 
 import logger from '@/lib/logger';
 
-import Button from '@/components/buttons/Button';
+import Button from '@/components/buttons';
 import Calendar from '@/components/calendar';
+import Card from '@/components/card';
+
 import { Chart } from '@/components/chart/Chart';
+
 import CircularProgress from '@/components/circular-progress';
 import Info from '@/components/info';
 import Input from '@/components/input';
@@ -15,6 +18,8 @@ import Select from '@/components/select';
 import Seo from '@/components/Seo';
 
 import { SignupApi } from '@/firebase/apis';
+
+import ClockIcon from '~/svg/ClockIcon.svg';
 
 export default function ComponentsPage() {
   const [startdate, setStartDate] = React.useState<Date | null>(new Date());
@@ -40,6 +45,7 @@ export default function ComponentsPage() {
         templateTitle='Components'
         description='Pre-built components with awesome default'
       />
+      <Card label='Attended to' stat='20 mins' icon={ClockIcon} />
       <div className='h-[200px] w-[400px]'>
         <Chart />
       </div>
