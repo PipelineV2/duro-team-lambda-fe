@@ -5,6 +5,7 @@ import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
 import Calendar from '@/components/calendar';
+import { Chart } from '@/components/chart/Chart';
 import CircularProgress from '@/components/circular-progress';
 import Info from '@/components/info';
 import Input from '@/components/input';
@@ -46,7 +47,9 @@ export default function ComponentsPage() {
         templateTitle='Components'
         description='Pre-built components with awesome default'
       />
-
+      <div className='h-[200px] w-[400px]'>
+        <Chart />
+      </div>
       <Button size='small' variant='secondary' onClick={handleForm}>
         Small Sizes
       </Button>
