@@ -110,7 +110,7 @@ const Table = (props: Props) => {
                             <select
                               value={datum?.status}
                               onChange={(e) =>
-                                handleChangeStatus(e, datum.ticketNo)
+                                handleChangeStatus(e, datum.ticketNo as string)
                               }
                               title='select status'
                               className={clsxm(
