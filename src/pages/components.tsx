@@ -6,6 +6,9 @@ import logger from '@/lib/logger';
 import Button from '@/components/buttons';
 import Calendar from '@/components/calendar';
 import Card from '@/components/card';
+
+import { Chart } from '@/components/chart/Chart';
+
 import CircularProgress from '@/components/circular-progress';
 import Info from '@/components/info';
 import Input from '@/components/input';
@@ -43,6 +46,10 @@ export default function ComponentsPage() {
         description='Pre-built components with awesome default'
       />
       <Card label='Attended to' stat='20 mins' icon={ClockIcon} />
+      <div className='h-[200px] w-[400px]'>
+        <Chart />
+      </div>
+ 
 
       <Button
         size='small'
@@ -50,6 +57,7 @@ export default function ComponentsPage() {
         onClick={handleForm}
         text='Small Sizes'
       />
+
 
       <div className='grid w-[90%] max-w-[420px] gap-2'>
         <Input
