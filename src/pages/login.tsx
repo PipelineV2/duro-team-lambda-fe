@@ -39,15 +39,13 @@ const SignupPageThree = () => {
           </Link>
         </div>
         <Button
-          text='Next'
+          text='Sign in'
           onClick={() => undefined}
           variant='primary'
           size='large'
           isFullwidth
           className='mb-6'
-        >
-          Finish
-        </Button>
+        />
       </div>
     </main>
   );

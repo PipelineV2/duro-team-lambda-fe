@@ -7,11 +7,11 @@ import Typography from '@/components/text';
 export interface CheckProps {
   label: string;
   value: string;
-  isRow: boolean;
+  isRow?: boolean;
 }
 
 const Checkbox = (props: CheckProps) => {
-  const { label, value, isRow } = props;
+  const { label, value, isRow = true } = props;
 
   return (
     <div>
