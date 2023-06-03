@@ -2,9 +2,10 @@
 import { collection, getDocs, query, where } from '@firebase/firestore';
 import { signOut } from 'firebase/auth';
 
+import QueueApi from '@/firebase/apis/vendors/queue';
 import { auth, db } from '@/firebase/FirebaseStore';
-import { dashboardReturnDataProps } from '@/utils/types';
-
+import { graphTransformer } from '@/utils';
+import { dashboardProps, dashboardReturnDataProps } from '@/utils/types';
 // Availability Auth
 const DashboardApi = async (): Promise<dashboardReturnDataProps | void> => {
   try {
@@ -26,16 +27,21 @@ const DashboardApi = async (): Promise<dashboardReturnDataProps | void> => {
       const inprogressQuery = query(dashboard, where('status', '==', 1));
       const inprogressSnapshot = await getDocs(inprogressQuery);
 
+      const graphData: any = await QueueApi('');
+
       if (dashboardSnapshot.docs.length > 0) {
-        const dashboardData: any = {
+        const dashboardData: dashboardProps = {
           queueLength: dashboardSnapshot.docs.length,
           attendedTo: attendedSnapshot.docs.length,
           leftQueue:
             unattendedSnapshot.docs.length + inprogressSnapshot.docs.length,
-          queueProgress:
-            (attendedSnapshot.docs.length / dashboardSnapshot.docs.length) *
-            100,
-          totalVisits: [],
+          queueProgress: parseFloat(
+            (
+              (attendedSnapshot.docs.length / dashboardSnapshot.docs.length) *
+              100
+            ).toFixed(2)
+          ),
+          totalVisits: graphTransformer(graphData.queueArray),
         };
         return {
           status: 200,

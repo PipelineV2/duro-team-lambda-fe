@@ -14,6 +14,20 @@ export type joinQueueProps = {
   phoneNumber: string;
   formLink: string;
 };
+export type updateAvailabilityProps = {
+  type: string;
+  value: string;
+};
+export type updateSettingsProps = {
+  type: string;
+  value?:
+    | {
+        lat: number;
+        long: number;
+        workingRadius: number;
+      }
+    | any;
+};
 export type queueReturnDataProps = {
   status: number;
   message: string;
@@ -63,12 +77,36 @@ export type userReturnDataProps = {
     emailVerified?: boolean;
   };
 };
+export type vendorReturnDataProps = {
+  status: number;
+  message: string;
+  vendorData?: {
+    phoneNumber: string;
+    businessName: string;
+    isOperating: boolean;
+    isWorkingDay: boolean;
+    isWorkHours: boolean;
+  };
+};
 export type createQueueReturnDataProps = {
   status: number;
   message: string;
-  queueArray?: queueProps[];
+  queueArray?: queueProps[] | [];
 };
 
+export type queueLinkReturnDataProps = {
+  status: number;
+  message: string;
+  queueArray?: queueListDataProps[] | [];
+  totalQueue?: number;
+};
+
+export type queueListDataProps = {
+  date: string;
+  ticketNo: number;
+  name: string;
+  queueNumber: number;
+};
 export type queueProps = {
   date: string;
   ticketNo: number;
@@ -76,6 +114,7 @@ export type queueProps = {
   purpose: string;
   phoneNumber: string;
   status: number;
+  queueNumber: number;
 };
 export type resetReturnDataProps = {
   status: number;
@@ -103,35 +142,67 @@ export type settingsReturnDataProps = {
 export type dashboardReturnDataProps = {
   status: number;
   message: string;
-  data?: {
-    queueLength: number;
-    attendedTo: number;
-    leftQueue: number;
-    queueProgress: number;
-    totalVisits: [];
-  };
+  data?: dashboardProps;
+};
+
+export type graphDataReturnProps = {
+  date: string;
+  totalVisits: number;
+};
+export type graphDataProps = {
+  date: string;
+  ticketNo: string;
+  name: string;
+  purpose: string;
+  phoneNumber: string;
+};
+export type dashboardProps = {
+  queueLength: number;
+  attendedTo: number;
+  leftQueue: number;
+  queueProgress: number;
+  totalVisits: graphDataReturnProps[];
 };
 
 export type availReturnDataProps = {
   status: number;
   message: string;
-  data?: {
-    subscribed: boolean;
-    openingHour: string;
-    closingHour: string;
-    currentOperationStatus: {
-      operation: boolean;
-      break: boolean;
-      closed: boolean;
-    }[];
-    workingDays: {
-      monday: boolean;
-      tuesday: boolean;
-      wednesday: boolean;
-      thursday: boolean;
-      friday: boolean;
-      saturday: boolean;
-      sunday: boolean;
-    }[];
-  };
+  data?: availProps;
+};
+
+export type settReturnDataProps = {
+  status: number;
+  message: string;
+  data?: settProps;
+};
+
+export type settProps = {
+  phoneNumber: string;
+  geofenceData: {
+    lat: number;
+    long: number;
+    workingRadius: number;
+    radiusUnit: string;
+  }[];
+  link: string;
+};
+
+export type availProps = {
+  subscribed: boolean;
+  openingHour: string;
+  closingHour: string;
+  currentOperationStatus: {
+    operation: boolean;
+    break: boolean;
+    closed: boolean;
+  }[];
+  workingDays: {
+    monday: boolean;
+    tuesday: boolean;
+    wednesday: boolean;
+    thursday: boolean;
+    friday: boolean;
+    saturday: boolean;
+    sunday: boolean;
+  }[];
 };
