@@ -19,12 +19,14 @@ const Checkbox = (props: CheckProps) => {
           name={value}
           id={value}
           value={value}
-          className={` ${
-            isRow && 'mr-[0.5rem]'
+          className={` ${isRow && 'mr-[0.5rem]'} ${
+            !isRow && 'mb-[0.5rem]'
           } text-green  rounded-sm focus:ring-0 focus:ring-offset-0`}
         />
         <label htmlFor={value}>
-          <Typography variant='secondary'>{label}</Typography>
+          <Typography variant={`${isRow ? 'secondary' : 'body1'}`}>
+            {label}
+          </Typography>
         </label>
       </div>
     </div>

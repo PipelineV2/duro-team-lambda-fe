@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import logger from '@/lib/logger';
 
+import AvailabilityCard from '@/components/availability-card';
 import Button from '@/components/buttons/Button';
 // import Button from '@/components/buttons';
 import Card from '@/components/card';
@@ -105,6 +106,8 @@ export default function ComponentsPage() {
       </div>
 
       <Status />
+
+      <AvailabilityCard />
     </Layout>
   );
 }
