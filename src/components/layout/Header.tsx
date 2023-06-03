@@ -9,7 +9,7 @@ import { strings } from '../../constant/strings';
 import ChatIcon from '~/svg/ChatIcon.svg';
 import NotificationIcon from '~/svg/NotificationIcon.svg';
 import SearchIcon from '~/svg/SearchIcon.svg';
-import Usericon from '~/svg/Usericon.svg';
+import Usericon from '~/svg/UserIcon.svg';
 
 export default function Header() {
   const { date, time } = useDate();
