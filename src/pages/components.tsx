@@ -4,24 +4,22 @@ import * as React from 'react';
 import logger from '@/lib/logger';
 
 import Button from '@/components/buttons/Button';
-import Button from '@/components/buttons';
-import Calendar from '@/components/calendar';
+// import Button from '@/components/buttons';
 import Card from '@/components/card';
-
 import { Chart } from '@/components/chart/Chart';
-
-import CircularProgress from '@/components/circular-progress';
 import Info from '@/components/info';
 import Input from '@/components/input';
 import Layout from '@/components/layout/Layout';
 import Progress from '@/components/progress';
 import Select from '@/components/select';
 import Seo from '@/components/Seo';
+import Status from '@/components/status';
 import Table from '@/components/Table';
 
 import { SignupApi } from '@/firebase/apis';
 
 import data from '../utils/data.json';
+
 import ClockIcon from '~/svg/ClockIcon.svg';
 
 export default function ComponentsPage() {
@@ -68,19 +66,18 @@ export default function ComponentsPage() {
           onClick={handleForm}
           text='Small Sizes'
         />
-      <Card label='Attended to' stat='20 mins' icon={ClockIcon} />
-      <div className='h-[200px] w-[400px]'>
-        <Chart />
+        <Card label='Attended to' stat='20 mins' icon={ClockIcon} />
+        <div className='h-[200px] w-[400px]'>
+          <Chart />
+        </div>
+
+        <Button
+          size='small'
+          variant='secondary'
+          onClick={handleForm}
+          text='Small Sizes'
+        />
       </div>
- 
-
-      <Button
-        size='small'
-        variant='secondary'
-        onClick={handleForm}
-        text='Small Sizes'
-      />
-
 
       <div className='grid w-[90%] max-w-[420px] gap-2'>
         <Input
@@ -106,6 +103,8 @@ export default function ComponentsPage() {
 
         {/* <Calendar selectedDate={startdate} onChange={setStartDate} /> */}
       </div>
+
+      <Status />
     </Layout>
   );
 }
