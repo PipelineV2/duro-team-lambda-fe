@@ -5,7 +5,6 @@ import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 import Status from '@/components/status';
 
-
 const Availability = () => {
   return (
     <Layout>
@@ -15,7 +14,6 @@ const Availability = () => {
       />
       <Status />
       <AvailabilityCard />
-
     </Layout>
   );
 };
