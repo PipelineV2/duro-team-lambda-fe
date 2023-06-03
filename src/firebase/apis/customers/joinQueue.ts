@@ -9,7 +9,12 @@ import {
 } from '@firebase/firestore';
 
 import { db } from '@/firebase/FirebaseStore';
-import { generateRandomCharacters } from '@/utils';
+import {
+  dateFormaterString,
+  getWeekday,
+  isWorkingHours,
+  timeConverter,
+} from '@/utils';
 import { joinQueueProps, queueReturnDataProps } from '@/utils/types';
 // Create/Join Queue
 const JoinQueueApi = async ({
@@ -22,22 +27,39 @@ const JoinQueueApi = async ({
     let returnData;
     const vendorDB = collection(db, 'Vendors');
     const vendorQuery = query(vendorDB, where('formLink', '==', formLink));
-
+    const weekday = getWeekday(new Date());
     const vendorSnapshot = await getDocs(vendorQuery);
-    if (vendorSnapshot.docs.length > 0) {
+    const isOperating: boolean =
+      vendorSnapshot.docs[0].data().currentOperationStatus['operation'];
+    const isWorkingDay: boolean =
+      vendorSnapshot.docs[0].data().workingDays[0][weekday];
+    const isWorkHours: boolean = isWorkingHours(
+      timeConverter(vendorSnapshot.docs[0].data().openingHour),
+      timeConverter(vendorSnapshot.docs[0].data().closingHour),
+      new Date()
+    );
+
+    if (
+      vendorSnapshot.docs.length > 0 &&
+      // Todo: uncomment the below for production. These conditions will affect continus development hence why they are commented
+      isOperating &&
+      isWorkingDay &&
+      isWorkHours
+    ) {
       const uid = vendorSnapshot.docs[0].id;
       const queueDB = collection(db, `Form-${uid}`);
 
       const queueQuery = query(
         queueDB,
-        where('phoneNumber', '==', phoneNumber)
+        where('phoneNumber', '==', phoneNumber) // Todo: geocode enabled conditions and subscription
       );
 
       const queueSnapshot = await getDocs(queueQuery);
+
       if (
         queueSnapshot.docs.length > 0 &&
-        new Date(queueSnapshot.docs[0].data().date).getDate() ===
-          new Date().getDate() &&
+        queueSnapshot.docs[0].data().date ===
+          dateFormaterString(new Date().toString()) &&
         queueSnapshot.docs[0].data().status !== 2
       ) {
         returnData = {
@@ -45,30 +67,38 @@ const JoinQueueApi = async ({
           message: 'Oops! User already on queue',
         };
       } else {
-        // const num: string = Math.floor(Math.random() * 99999).toString();
-        const id = generateRandomCharacters(5);
-
+        const num: string = Math.floor(Math.random() * 99999).toString();
+        let queueNumber = 1;
         const queueListDB = collection(db, `Form-${uid}`);
-        const queueNumberQuery = query(queueListDB, where('status', '==', 0));
+        const queueNumberQuery = query(queueListDB, where('status', '<=', 0)); // date factor
         const queueNumberSnapshot = await getDocs(queueNumberQuery);
-        const newFormDB = doc(db, `Form-${uid}`, id);
+        if (queueNumberSnapshot.docs.length > 0) {
+          queueNumber =
+            queueNumberSnapshot.docs.filter(
+              (doc) =>
+                doc?.data().date === dateFormaterString(new Date().toString())
+            ).length + 1;
+        }
+        const newFormDB = doc(db, `Form-${uid}`, num);
+        const today = new Date();
         await setDoc(
           newFormDB,
           {
             vendor: vendorSnapshot.docs[0].data().businessName,
             vendorId: uid,
-            date: Date(),
-            ticketNo: id,
+            date: dateFormaterString(today.toString()),
+            ticketNo: num,
             name,
             purpose,
             phoneNumber,
+            queueNumber,
             status: 0, // on queue
           },
           { merge: true }
         ).then(() => {
           returnData = {
             status: 201,
-            queueNumber: queueNumberSnapshot.docs.length + 1,
+            queueNumber,
             message: 'New User added to Queue',
           };
         });
@@ -76,7 +106,9 @@ const JoinQueueApi = async ({
     } else {
       returnData = {
         status: 404,
-        message: 'Oops! Vendor does not exist in our database',
+        message: `Oops! This Form is Expired. Kindly Contact reach out to ${
+          vendorSnapshot.docs[0].data().businessName
+        } for further directives`,
       };
     }
     return returnData;
