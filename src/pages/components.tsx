@@ -5,7 +5,6 @@ import logger from '@/lib/logger';
 
 import AvailabilityCard from '@/components/availability-card';
 import Button from '@/components/buttons/Button';
-
 import Card from '@/components/card';
 import { Chart } from '@/components/chart/Chart';
 import Info from '@/components/info';
