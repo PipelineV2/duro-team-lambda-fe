@@ -3,14 +3,9 @@ import * as React from 'react';
 
 import logger from '@/lib/logger';
 
-import Button from '@/components/buttons/Button';
 import Button from '@/components/buttons';
-import Calendar from '@/components/calendar';
 import Card from '@/components/card';
-
 import { Chart } from '@/components/chart/Chart';
-
-import CircularProgress from '@/components/circular-progress';
 import Info from '@/components/info';
 import Input from '@/components/input';
 import Layout from '@/components/layout/Layout';
@@ -22,6 +17,7 @@ import Table from '@/components/Table';
 import { SignupApi } from '@/firebase/apis';
 
 import data from '../utils/data.json';
+
 import ClockIcon from '~/svg/ClockIcon.svg';
 
 export default function ComponentsPage() {
@@ -68,43 +64,42 @@ export default function ComponentsPage() {
           onClick={handleForm}
           text='Small Sizes'
         />
-      <Card label='Attended to' stat='20 mins' icon={ClockIcon} />
-      <div className='h-[200px] w-[400px]'>
-        <Chart />
-      </div>
- 
+        <Card label='Attended to' stat='20 mins' icon={ClockIcon} />
+        <div className='h-[200px] w-[400px]'>
+          <Chart />
+        </div>
 
-      <Button
-        size='small'
-        variant='secondary'
-        onClick={handleForm}
-        text='Small Sizes'
-      />
-
-
-      <div className='grid w-[90%] max-w-[420px] gap-2'>
-        <Input
-          label='Work Email'
-          placeholder='Work email'
-          error='this is an error'
-          type='password'
-          name='password'
+        <Button
+          size='small'
+          variant='secondary'
+          onClick={handleForm}
+          text='Small Sizes'
         />
 
-        <Select
-          label='Industry'
-          placeholder='Select Work email'
-          error='this is an error'
-          options={['Banking', 'Dancing']}
-        />
+        <div className='grid w-[90%] max-w-[420px] gap-2'>
+          <Input
+            label='Work Email'
+            placeholder='Work email'
+            error='this is an error'
+            type='password'
+            name='password'
+          />
 
-        <Progress currentStep={1} totalStep={3} />
+          <Select
+            label='Industry'
+            placeholder='Select Work email'
+            error='this is an error'
+            options={['Banking', 'Dancing']}
+          />
 
-        <Info text='Use your work email for smooth integrations and use' />
+          <Progress currentStep={1} totalStep={3} />
 
-        {/* <CircularProgress progress={50} /> */}
+          <Info text='Use your work email for smooth integrations and use' />
 
-        {/* <Calendar selectedDate={startdate} onChange={setStartDate} /> */}
+          {/* <CircularProgress progress={50} /> */}
+
+          {/* <Calendar selectedDate={startdate} onChange={setStartDate} /> */}
+        </div>
       </div>
     </Layout>
   );

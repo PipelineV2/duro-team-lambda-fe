@@ -86,26 +86,38 @@ const Table = (props: Props) => {
           <table className='w-full border-collapse border-spacing-6'>
             <thead>
               <tr className='border-grey5 border-b '>
-                <th className='py-5 text-left' rowSpan={3}>
+                <th className='py-5 pr-3 text-left' rowSpan={3}>
                   <p></p>
                 </th>
-                {newHeaders?.map((header, id) => (
-                  <th key={id} className='py-5 text-left font-normal'>
-                    <Typography variant='body2' className='text-grey2'>
-                      {header['label']}
-                    </Typography>
-                  </th>
-                ))}
+                {newHeaders?.map((header, id) => {
+                  return (
+                    <th
+                      key={id}
+                      className={clsxm('py-5 pr-3 text-left font-normal', [
+                        !header.showInPhone && 'hidden md:table-cell',
+                      ])}
+                    >
+                      <Typography variant='body2' className='text-grey2'>
+                        {header['label']}
+                      </Typography>
+                    </th>
+                  );
+                })}
               </tr>
             </thead>
             <tbody>
               {data.map((datum, index) => {
                 return (
                   <tr key={index} className='border-grey5 border-b'>
-                    <td className='py-5 text-left'>{index + 1}</td>
+                    <td className='py-5 pr-3 text-left'>{index + 1}</td>
                     {newHeaders?.map((item, index) => {
                       return (
-                        <td className='py-5 text-left' key={index}>
+                        <td
+                          className={clsxm('py-5 pr-3 text-left', [
+                            !item.showInPhone && 'hidden md:table-cell',
+                          ])}
+                          key={index}
+                        >
                           {item.data === 'status' ? (
                             <select
                               value={datum?.status}

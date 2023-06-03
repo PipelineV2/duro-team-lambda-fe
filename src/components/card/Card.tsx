@@ -15,7 +15,7 @@ type Props = {
 const Card = (props: Props) => {
   const { icon: Icon, label, stat } = props;
   return (
-    <div className='shadow-s2 w-full max-w-[350px] rounded-lg bg-white p-[18px] pl-[34px]'>
+    <div className='shadow-s2 w-full  rounded-lg bg-white p-[18px] pl-[34px]'>
       <div className='mb-6'>
         {Icon ? (
           <Icon className='text-[32px]' />
