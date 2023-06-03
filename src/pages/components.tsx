@@ -3,7 +3,9 @@ import * as React from 'react';
 
 import logger from '@/lib/logger';
 
-import Button from '@/components/buttons';
+import AvailabilityCard from '@/components/availability-card';
+import Button from '@/components/buttons/Button';
+
 import Card from '@/components/card';
 import { Chart } from '@/components/chart/Chart';
 import Info from '@/components/info';
@@ -12,6 +14,7 @@ import Layout from '@/components/layout/Layout';
 import Progress from '@/components/progress';
 import Select from '@/components/select';
 import Seo from '@/components/Seo';
+import Status from '@/components/status';
 import Table from '@/components/Table';
 
 import { SignupApi } from '@/firebase/apis';
@@ -101,6 +104,10 @@ export default function ComponentsPage() {
           {/* <Calendar selectedDate={startdate} onChange={setStartDate} /> */}
         </div>
       </div>
+
+      <Status />
+
+      <AvailabilityCard />
     </Layout>
   );
 }

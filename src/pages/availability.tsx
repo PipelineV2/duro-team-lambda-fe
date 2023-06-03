@@ -1,8 +1,10 @@
 import React from 'react';
 
+import AvailabilityCard from '@/components/availability-card';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
-import Typography from '@/components/text';
+import Status from '@/components/status';
+
 
 const Availability = () => {
   return (
@@ -11,9 +13,9 @@ const Availability = () => {
         templateTitle='Availability'
         description='Set Cleints Availability'
       />
-      <Typography variant='h1' className='text-grey2 mb-16 '>
-        I am unavailable
-      </Typography>
+      <Status />
+      <AvailabilityCard />
+
     </Layout>
   );
 };
