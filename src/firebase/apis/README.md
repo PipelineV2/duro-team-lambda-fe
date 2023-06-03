@@ -11,8 +11,10 @@ it would require that the Firebase api keys and other variables be used. Kindly 
 # REST API
 
 The REST API endpoints to the Duro app is described below.
+`VENDOR` - Duro's paying client/business using Duro to manage her customers
+`CUSTOMER/CLEINT` - Vendor's business client who visit their business premises to conduct business.
 
-## Vendor Signup
+## Signup (Vendor)
 
 **SignupApi()**
 
@@ -50,7 +52,7 @@ An email is sent to the registered account for verification and a promise that r
   }
 ```
 
-## Signin
+## Signin (Vendor)
 
 **SigninApi()**
 
@@ -86,7 +88,7 @@ A promise that resolves with the following object:
 
 The `SignoutApi` function is used to sign out a registered user. No paramter is required nor any response expected. Upon a successful signout, the user loses access to protected routes.
 
-## Reset Password
+## Reset Password (Vendor)
 
 **ResetPasswordApi()**
 
@@ -112,7 +114,7 @@ A promise that resolves with the following object:
   }
 ```
 
-## Change Password
+## Change Password (Vendor)
 
 **ChangePasswordApi()**
 
@@ -138,7 +140,7 @@ A promise that resolves with the following object:
   }
 ```
 
-## User Data
+## User Data (Vednor)
 
 **UserDetailsApi()**
 
@@ -173,7 +175,7 @@ NB: the userData object will be different for the customers.
 
 ---
 
-## Dashboard
+## Dashboard (Vendor)
 
 **DashboardApiApi()**
 
@@ -199,7 +201,7 @@ A promise that resolves with the following object:
   }
 ```
 
-## Settings
+## Settings (Vendor)
 
 **SettingsApi()**
 
@@ -228,7 +230,7 @@ A promise that resolves with the following object:
   }
 ```
 
-## Availability
+## Availability (Vendor)
 
 **AvailabilityApi()**
 
@@ -266,13 +268,20 @@ A promise that resolves with the following object:
   }
 ```
 
-## Queue
+## Queue (Vendor)
 
 **QueueApi()**
 
 **Description:**
 
-The `QueueApi` gets dashboard data. It takes no parameter.
+The `QueueApi` gets dashboard data. It takes only a date parameter which is compulsory but can be empty. The date paramter must be in the format: `mm/dd/yyyy` e.g. `06/01/2023` .i.e. June, 1, 2023.
+However, as earleir mentioned it can be an empty string in the event there is no date data passed. If date = '', the api will retrieve all queue data available for the vendor since inception. Be informed!
+**Parameters:**
+
+```
+  date: string;
+
+```
 
 **Returns:**
 
@@ -289,13 +298,187 @@ A promise that resolves with the following object:
       purpose: string;
       phoneNumber: string;
       status: number;
+      queueNumber: number;
     }[];
   }
 ```
 
----
+## Update Queue (Vendor)
 
-## Create Queue
+**UpdateQueueApi()**
+
+**Description:**
+
+The `UpdateQueueApi` function is POST method that allow vendor to update the queue status per client/customer.
+
+**Parameters:**
+
+```
+  ticketNo: string;
+  value: number; // 0 - onQueue; 1 - inProgress; 2 - done
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+  }
+```
+
+## Update Availability (Vendor)
+
+**UpdateQueueApi()**
+
+**Description:**
+
+The `UpdateAvailabilityApi` function is POST method that allow vendor to update the data on the Availability page of the vendor's side of the application. Given that there are four items that can be updated on the Availability page.
+
+**Parameters:**
+
+```
+  type: string; //  "openingHour" | "operation" | "closingHour" | "workingDays"
+  value: string;
+
+// Please carefully understand the respective value expected for each type below
+  switch (type) {
+    case 'workingDays':
+      // value can be "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
+
+    case 'closingHour':
+      // value expected is a string in this format `6:00 pm`
+    case 'openingHour':
+      // value expected is a string in this format `8:00 am`
+    case 'operation':
+      // value can be "operation" | "break" | "closed"
+    default:
+      break;
+  }
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+    data?: {
+      subscribed: boolean;
+      openingHour: string;
+      closingHour: string;
+      currentOperationStatus: {
+        operation: boolean;
+        break: boolean;
+        closed: boolean;
+      }[];
+      workingDays: {
+        monday: boolean;
+        tuesday: boolean;
+        wednesday: boolean;
+        thursday: boolean;
+        friday: boolean;
+        saturday: boolean;
+        sunday: boolean;
+      }[];
+    };
+  }
+```
+
+## Update Settings (Vendor)
+
+**UpdateSettingsApi()**
+
+**Description:**
+
+The `UpdateSettingsApi` function is POST method that allow vendor to update the data on the Settings page of the vendor's side of the application. Given that there are two items that can be updated on the Settings page.
+
+**Parameters:**
+
+```
+  type: string; // "geofenceData" | "link"
+  value?:
+    | {
+        lat: number;
+        long: number;
+        workingRadius: number;
+      }
+    | any;
+
+// Please carefully understand the respective value expected for each type below
+  switch (type) {
+    case 'link':
+      // requires no value input
+
+    case 'geofenceData':
+      // value is an object of (lat, long and workingRadius) - see `value` parameter above
+    default:
+      break;
+  }
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+    data?: {
+      phoneNumber: string;
+      geofenceData: {
+        lat: number;
+        long: number;
+        workingRadius: number;
+        radiusUnit: string;
+      }[];
+      link: string;
+    };
+  }
+```
+
+## Get Business Data for Form (Customer/Client)
+
+**VendorFormDetailsApi()**
+
+**Description:**
+
+The `VendorFormDetailsApi` function is a GET method that FE should call upon rendering the Queue form for any vendor. It pulls the vendor data to allow easy identification of respective vendor.
+
+**Parameters:**
+
+```
+  formLinkID: string// unique to every organization passed from the URL
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+    status: number;
+    message: string;
+    vendorData?: {
+      phoneNumber: string;
+      businessName: string;
+      isOperating: boolean;
+      isWorkingDay: boolean;
+      isWorkHours: boolean;
+    };
+  }
+```
+
+NB: Both `isOperating`, `isWorkHours` and `isWorkingDay` must be true to give user access to the queue form
+
+## Create Queue (Customer/Client)
 
 **JoinQueueApi()**
 
@@ -325,19 +508,18 @@ A promise that resolves with the following object:
   }
 ```
 
-## Create Queue
+## View Queue List (Customer/Client)
 
-**UpdateQueueApi()**
+**QueueListApi()**
 
 **Description:**
 
-The `UpdateQueueApi` function is POST method that allow vendor to update the queue status per client/customer.
+The `QueueListApi` function is GET method that allow vendor's clients/customers to view the waiting list.
 
 **Parameters:**
 
 ```
-  ticketNo: string;
-  value: number; // 0 - onQueue; 1 - inProgress; 2 - done
+  formLinkID: string  // unique to every organization
 
 ```
 
@@ -349,12 +531,19 @@ A promise that resolves with the following object:
   {
     status: number;
     message: string;
+    queueArray?: {
+      date: string;
+      ticketNo: number;
+      name: string;
+      queueNumber: number;
+    }[];
+    totalQueue?: number;
   }
 ```
 
 **Status:**
 
-The status of the sign up request. Possible values are:
+The status of the responses. Possible values are:
 
 - 201 - resource successfully created.
 - 200 - resource successfully retrieved/sent.
@@ -371,7 +560,9 @@ import { ChangePasswordApi, SigninApi, SignupApi, SignoutApi, UserDetailsApi,
 ResetPasswordApi,
 JoinQueueApi, UpdateQueueApi,
 DashboardApi, QueueApi,
-AvailabilityApi, SettingsApi
+AvailabilityApi, SettingsApi,
+UpdateAvailabilityApi, UpdateSettingsApi,
+VendorFormDetailsApi,QueueListApi
  } from '@/firebase/apis';
 ...
 <!-- signup -->
@@ -423,15 +614,6 @@ const changepassword = async () => {
 <!-- userData -->
 UserDetailsApi().then((res) => console.log(res));
 
-<!-- create Queue -->
-const joinQueueData = {
-  name: 'Bade lange',
-  purpose: 'Personal matter',
-  phoneNumber: '393677794',
-  formLink: 'Quid-5wef43',
-};
-
-JoinQueueApi(joinQueueData).then((res) => console.log(res, 'join queue result'));
 
 Protected Pages(Dashboard, Queue, Availability, Settings and Others)
 
@@ -442,15 +624,66 @@ signin()
        console.log(res)
     );
 <!-- Queue Screen -->
-    QueueApi().then((res) => console.log(res));
+    const today = dateFormaterString(new Date('06/01/2023').toString());
+    QueueApi(today).then((res) => console.log(res)); // get TODAY's queue data
+    QueueApi('').then((res) => console.log(res)); // get ALL queue data
+
+<!-- Dashboard Screen -->
     DashboardApi().then((res) => console.log(res));
+
 <!-- Get User Data -->
     UserDetailsApi().then((res) => console.log(res));
+
 <!-- Availability Screen -->
     AvailabilityApi().then((res) => console.log(res));
+
  <!-- Settings Screen -->
     SettingsApi().then((res) => console.log(res));
   })
   .catch((err) => console.log(err));
+
+<!-- Update Availability Screen -->
+   const update = {
+      type: 'workingDays',
+      value: 'thursday',
+    };
+    UpdateAvailabilityApi(update).then((res) => console.log(res));
+
+ <!-- Update Settings Screen  (Update Geofence data)  -->
+    const updateSet = {
+      type: 'geofenceData',
+      value: {
+        lat: 2.34343,
+        long: 6.34232,
+        workingRadius: 4,
+      },
+    };
+    UpdateSettingsApi(updateSet).then((res) => console.log(res));
+
+  <!-- Update Settings Screen (Generate new Form Link) -->
+  const updateSetLink = {
+      type: 'link'
+    };
+    UpdateSettingsApi(updateSet).then((res) => console.log(res));
+
+  .catch((err) => console.log(err));
+
+
+  <!-- CUSTOMERS -->
+  <!-- getBusinessData for Queue Form -->
+  \\ get businessData to allow customers confirm which vendor's queue platform they are on and filling
+  VendorFormDetailsApi('Quid-k7qiuu').then((res) => console.log(res));
+
+<!-- Queue list -->
+  QueueListApi('Quid-k7qiuu').then((res) => console.log(res));
+
+<!-- create Queue -->
+  const joinQueueData = {
+    name: 'Bade lange',
+    purpose: 'Personal matter',
+    phoneNumber: '393677794',
+    formLink: 'Quid-5wef43',
+  };
+  JoinQueueApi(joinQueueData).then((res) => console.log(res, 'join queue result'));
 
 ```
