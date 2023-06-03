@@ -60,7 +60,7 @@ const Sidebar = () => {
       )}
     >
       <Link href='/' className='mb-3 inline-block md:mb-20'>
-        <Duro className='h-[33px] w-[88px]' />
+        <Duro className='text-green h-[33px] w-[88px]' />
       </Link>
       <button
         className={clsxm('fixed top-[45px] md:hidden', [

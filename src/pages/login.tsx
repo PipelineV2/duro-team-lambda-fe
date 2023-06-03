@@ -12,7 +12,7 @@ const SignupPageThree = () => {
     <main className='h-screen w-screen p-3 '>
       <div className='m-auto w-full max-w-[418px] pt-5 md:pt-20 lg:pt-[105px]'>
         <Link href='/'>
-          <DuroLogo className='m-auto mb-4 h-[40px]  w-[120px] md:mb-8 lg:mb-16 lg:h-[55px] lg:w-[142px]' />
+          <DuroLogo className='text-green m-auto mb-4  h-[40px] w-[120px] md:mb-8 lg:mb-16 lg:h-[55px] lg:w-[142px] ' />
         </Link>
         <Typography variant='h3' className='mb-6 text-center'>
           Welcome back
@@ -39,15 +39,13 @@ const SignupPageThree = () => {
           </Link>
         </div>
         <Button
-          text='Next'
+          text='Sign in'
           onClick={() => undefined}
           variant='primary'
           size='large'
           isFullwidth
           className='mb-6'
-        >
-          Finish
-        </Button>
+        />
       </div>
     </main>
   );
