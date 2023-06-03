@@ -12,6 +12,7 @@ const TextVariant = [
   'secondary',
   'body2',
   'body1',
+  'body3',
 ] as const;
 
 type TextProps = {
