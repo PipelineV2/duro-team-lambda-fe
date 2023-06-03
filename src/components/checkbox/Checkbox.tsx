@@ -1,5 +1,7 @@
 import React from 'react';
 
+import clsxm from '@/lib/clsxm';
+
 import Typography from '@/components/text';
 
 export interface CheckProps {
@@ -19,12 +21,13 @@ const Checkbox = (props: CheckProps) => {
           name={value}
           id={value}
           value={value}
-          className={` ${isRow && 'mr-[0.5rem]'} ${
-            !isRow && 'mb-[0.5rem]'
-          } text-green  rounded-sm focus:ring-0 focus:ring-offset-0`}
+          className={clsxm(
+            'text-green h-5 w-5 rounded focus:ring-0 focus:ring-offset-0',
+            [isRow && 'mr-[0.5rem]', !isRow && 'mb-[0.5rem]']
+          )}
         />
         <label htmlFor={value}>
-          <Typography variant={`${isRow ? 'secondary' : 'body1'}`}>
+          <Typography variant='button' className='text-grey2'>
             {label}
           </Typography>
         </label>
