@@ -1,6 +1,9 @@
 import { AppProps } from 'next/app';
+import { Toaster } from 'react-hot-toast';
 
 import '@/styles/globals.css';
+
+import { AuthContextProvider } from '@/context/auth';
 
 /**
  * !STARTERCONF info
@@ -8,7 +11,12 @@ import '@/styles/globals.css';
  */
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <AuthContextProvider>
+      <Component {...pageProps} />
+      <Toaster />
+    </AuthContextProvider>
+  );
 }
 
 export default MyApp;

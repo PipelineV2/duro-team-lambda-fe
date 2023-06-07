@@ -1,3 +1,4 @@
+import { useField } from 'formik';
 import React from 'react';
 
 import clsxm from '@/lib/clsxm';
@@ -7,33 +8,45 @@ import DownwardCaret from '~/svg/DownwardCaret.svg';
 export interface ISelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
-  error?: boolean | string;
   placeholder: string;
   options: string[] | { value: string; label: string }[];
+  name: string;
 }
 
 const Select = (props: ISelectProps) => {
-  const { label, error, placeholder, options, className } = props;
+  const [field, meta, helpers] = useField(props);
+  const { label, placeholder, options, className } = props;
+
+  const onChange = (e: any) => {
+    helpers.setTouched(true);
+    helpers.setValue(e.target.value);
+  };
+
   return (
     <div className='block w-full'>
       <label
         htmlFor={label}
         className={clsxm('text-grey1 mb-2 block text-base', [
-          error && 'text-red',
+          meta.error && 'text-red',
         ])}
       >
         {label}
       </label>
       <div className='relative w-full'>
         <select
+          {...field}
           title={label}
           id={label}
           name={label}
+          onChange={onChange}
           className={clsxm(
             'w-full appearance-none caret-transparent',
             'border-gray2 text-grey1 rounded border px-4 py-3 text-base  disabled:cursor-not-allowed',
             'focus:border-black focus:outline-none  focus:ring-black',
-            [error && 'border-red text-red focus:border-red focus:ring-red'],
+            [
+              meta.error &&
+                'border-red text-red focus:border-red focus:ring-red',
+            ],
             [className]
           )}
         >
@@ -56,10 +69,12 @@ const Select = (props: ISelectProps) => {
         <DownwardCaret
           className={clsxm(
             'text-border-gray2 absolute right-4 top-3 bg-white text-2xl',
-            [error && 'text-red']
+            [meta.error && 'text-red']
           )}
         />
-        {error && <p className='text-red text-xs'>{error}</p>}
+        {meta.touched && meta.error ? (
+          <p className='text-red pt-1 text-xs'>{meta.error}</p>
+        ) : null}
       </div>
     </div>
   );

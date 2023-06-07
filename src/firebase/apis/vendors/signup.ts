@@ -7,7 +7,8 @@ import {
 
 import { auth, db } from '@/firebase/FirebaseStore';
 import { createFormLink } from '@/utils';
-import { signupProps, signupReturnDataProps } from '@/utils/types';
+import { signupProps } from '@/utils/types';
+
 // Signup Auth
 const SignupApi = async ({
   email,
@@ -18,7 +19,7 @@ const SignupApi = async ({
   industry,
   employeeSize,
   phoneNumber,
-}: signupProps): Promise<signupReturnDataProps | string | undefined> => {
+}: signupProps) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user: any = res.user;

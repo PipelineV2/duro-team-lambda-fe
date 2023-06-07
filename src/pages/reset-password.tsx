@@ -1,6 +1,5 @@
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
@@ -11,40 +10,31 @@ import Button from '@/components/buttons/Button';
 import Input from '@/components/input';
 import Typography from '@/components/text';
 
-import { SigninApi } from '@/firebase/apis';
+import { ResetPasswordApi } from '@/firebase/apis';
 
 import DuroLogo from '~/svg/Duro.svg';
 
 interface Values {
   email: string;
-  password: string;
 }
 
 export const validationSchema = Yup.object().shape({
   email: Yup.string().required('Email is required').email('Email is invalid'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
 });
 
-const Login = () => {
-  const router = useRouter();
+const SignupPageThree = () => {
   useRedirectToDashboard();
+
   const submitForm = async (values: Values, actions: FormikHelpers<Values>) => {
     // alert(JSON.stringify(values, null, 2));
-    const result = await SigninApi({ ...values });
+    await ResetPasswordApi(values.email);
 
     actions.setSubmitting(false);
 
-    if (!result?.token) {
-      const errorMessage = result?.message.includes('ops')
-        ? 'Invalid username or password. Please try again.'
-        : result?.message;
-      return toast.error(errorMessage || 'error loging in');
-    }
-
+    actions.resetForm();
     // else successful
-    return router.push('/dashboard');
+    toast.success('Password reset successful! ');
+    // return router.push('/login');
   };
 
   return (
@@ -54,12 +44,14 @@ const Login = () => {
           <DuroLogo className='text-green m-auto mb-4  h-[40px] w-[120px] md:mb-8 lg:mb-16 lg:h-[55px] lg:w-[142px] ' />
         </Link>
         <Typography variant='h3' className='mb-6 text-center'>
-          Welcome back
+          Reset Password
+        </Typography>
+        <Typography variant='body2' className='mb-6 text-center'>
+          Please enter your email to initiate resetting your password
         </Typography>
         <Formik
           initialValues={{
             email: '',
-            password: '',
           }}
           validationSchema={validationSchema}
           onSubmit={(values, actions) => {
@@ -75,20 +67,9 @@ const Login = () => {
                   name='email'
                   type='email'
                 />
-                <Input
-                  label='Password'
-                  placeholder=''
-                  name='password'
-                  type='password'
-                />
-                <Link
-                  href='/reset-password'
-                  className='text-green mt-4 inline-block text-sm font-medium leading-5'
-                >
-                  Forgot password?
-                </Link>
+
                 <Button
-                  text='Sign in'
+                  text='Reset'
                   onClick={() => props.handleSubmit()}
                   variant='primary'
                   size='large'
@@ -97,18 +78,6 @@ const Login = () => {
                   type='submit'
                   isLoading={props.isSubmitting}
                 />
-
-                <div className='flex items-center justify-center gap-2'>
-                  <Typography variant='body3' className='text-gray3 text-sm'>
-                    Don't have an account?
-                  </Typography>
-                  <Link
-                    href='/signup'
-                    className='text-green text-sm font-medium leading-5'
-                  >
-                    Create account
-                  </Link>
-                </div>
               </div>
             </Form>
           )}
@@ -118,4 +87,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignupPageThree;

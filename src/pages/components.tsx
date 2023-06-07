@@ -82,7 +82,6 @@ export default function ComponentsPage() {
           <Input
             label='Work Email'
             placeholder='Work email'
-            error='this is an error'
             type='password'
             name='password'
           />
@@ -90,8 +89,8 @@ export default function ComponentsPage() {
           <Select
             label='Industry'
             placeholder='Select Work email'
-            error='this is an error'
             options={['Banking', 'Dancing']}
+            name='industry'
           />
 
           <Progress currentStep={1} totalStep={3} />
