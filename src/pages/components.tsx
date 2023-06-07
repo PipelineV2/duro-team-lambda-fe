@@ -10,6 +10,7 @@ import { Chart } from '@/components/chart/Chart';
 import Info from '@/components/info';
 import Input from '@/components/input';
 import Layout from '@/components/layout/Layout';
+import Book from '@/components/mobile-form';
 import Progress from '@/components/progress';
 import Select from '@/components/select';
 import Seo from '@/components/Seo';
@@ -105,6 +106,8 @@ export default function ComponentsPage() {
       </div>
 
       <Status />
+
+      <Book />
     </Layout>
   );
 }
