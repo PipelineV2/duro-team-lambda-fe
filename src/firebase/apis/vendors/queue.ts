@@ -3,11 +3,16 @@ import { collection, getDocs, query, where } from '@firebase/firestore';
 import { signOut } from 'firebase/auth';
 
 import { auth, db } from '@/firebase/FirebaseStore';
+import { dateFormaterString } from '@/utils';
 import { createQueueReturnDataProps, queueProps } from '@/utils/types';
-
 // Get user details
-const QueueApi = async (): Promise<createQueueReturnDataProps | void> => {
+
+const QueueApi = async (
+  date: string
+): Promise<createQueueReturnDataProps | void> => {
   const queueArray: queueProps[] = [];
+  let data: queueProps[] = [];
+  let sortedArray: queueProps[] = [];
   try {
     const user = await auth.currentUser;
     if (user) {
@@ -25,20 +30,33 @@ const QueueApi = async (): Promise<createQueueReturnDataProps | void> => {
         if (queueSnapshot.docs.length > 0) {
           queueSnapshot.docs.map((doc) => {
             queueArray.push({
-              date: doc?.data().date,
+              date: dateFormaterString(doc?.data().date),
               ticketNo: doc?.data().ticketNo,
               name: doc?.data().name,
               purpose: doc?.data().purpose,
               phoneNumber: doc?.data().phoneNumber,
               status: doc?.data().status,
+              queueNumber: doc?.data().queueNumber,
             });
           });
+          sortedArray = queueArray.sort(
+            (a, b) => a.queueNumber - b.queueNumber
+          );
+          if (date !== '') {
+            sortedArray
+              .filter((doc) => doc.date === date)
+              .map((d) => {
+                data.push(d);
+              });
+          } else {
+            data = sortedArray;
+          }
         }
 
         return {
           status: 200,
-          message: 'queue screen data retrieved successful',
-          queueArray,
+          message: '(vendor) queue screen data retrieved successful',
+          queueArray: data,
         };
       }
     } else {

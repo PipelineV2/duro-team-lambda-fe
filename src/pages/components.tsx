@@ -3,8 +3,8 @@ import * as React from 'react';
 
 import logger from '@/lib/logger';
 
+import AvailabilityCard from '@/components/availability-card';
 import Button from '@/components/buttons/Button';
-// import Button from '@/components/buttons';
 import Card from '@/components/card';
 import { Chart } from '@/components/chart/Chart';
 import Info from '@/components/info';
@@ -78,36 +78,40 @@ export default function ComponentsPage() {
           onClick={handleForm}
           text='Small Sizes'
         />
-      </div>
 
-      <div className='grid w-[90%] max-w-[420px] gap-2'>
-        <Input
-          label='Work Email'
-          placeholder='Work email'
-          error='this is an error'
-          type='password'
-          name='password'
-        />
+        <div className='grid w-[90%] max-w-[420px] gap-2'>
+          <Input
+            label='Work Email'
+            placeholder='Work email'
+            error='this is an error'
+            type='password'
+            name='password'
+          />
 
-        <Select
-          label='Industry'
-          placeholder='Select Work email'
-          error='this is an error'
-          options={['Banking', 'Dancing']}
-        />
+          <Select
+            label='Industry'
+            placeholder='Select Work email'
+            error='this is an error'
+            options={['Banking', 'Dancing']}
+          />
 
-        <Progress currentStep={1} totalStep={3} />
+          <Progress currentStep={1} totalStep={3} />
 
-        <Info text='Use your work email for smooth integrations and use' />
+          <Info text='Use your work email for smooth integrations and use' />
 
-        {/* <CircularProgress progress={50} /> */}
+          {/* <CircularProgress progress={50} /> */}
 
-        {/* <Calendar selectedDate={startdate} onChange={setStartDate} /> */}
+          {/* <Calendar selectedDate={startdate} onChange={setStartDate} /> */}
+        </div>
       </div>
 
       <Status />
 
+
       <Book />
+
+      <AvailabilityCard />
+
     </Layout>
   );
 }

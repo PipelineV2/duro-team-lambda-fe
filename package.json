@@ -19,6 +19,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@headlessui/react": "^0.0.0-dev.0ce63d8",
+    "@heroicons/react": "^2.0.18",
     "chart.js": "^4.3.0",
     "clsx": "^1.2.1",
     "firebase": "^9.22.1",
@@ -28,6 +30,7 @@
     "react-datepicker": "^4.12.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
+    "react-qr-code": "^2.0.11",
     "tailwind-merge": "^1.12.0"
   },
   "devDependencies": {
@@ -63,8 +66,8 @@
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
       "eslint src --fix",
-      "eslint --max-warnings=0",
       "yarn format",
+      "eslint --max-warnings=0",
       "prettier -w"
     ],
     "**/*.{json,css,scss,md,webmanifest}": [

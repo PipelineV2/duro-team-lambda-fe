@@ -9,13 +9,13 @@ import { strings } from '../../constant/strings';
 import ChatIcon from '~/svg/ChatIcon.svg';
 import NotificationIcon from '~/svg/NotificationIcon.svg';
 import SearchIcon from '~/svg/SearchIcon.svg';
-import Usericon from '~/svg/Usericon.svg';
+import Usericon from '~/svg/UserIcon.svg';
 
 export default function Header() {
   const { date, time } = useDate();
   const { TRIAL_PERIOD_TEXT } = strings;
   return (
-    <header className='fixed top-0   w-full  bg-[#FBFBFB] md:pl-72'>
+    <header className='fixed top-0 z-10  w-full  bg-[#FBFBFB] md:pl-72'>
       <div className='border-b-grey5 h-[96px] items-center justify-between border-b px-6 pt-3 md:flex'>
         <Typography variant='secondary' className='text-grey3'>
           {date} | {time}

@@ -7,7 +7,7 @@ const Status = () => {
   return (
     <div>
       <div className=' mt-[3rem] flex w-[60%] justify-between'>
-        <Typography variant='body2'>
+        <Typography variant='body2' className='text-grey1'>
           Tell the status of your operations
         </Typography>
 

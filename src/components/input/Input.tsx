@@ -39,7 +39,7 @@ const Input = (props: IInputProps) => {
   };
 
   return (
-    <div className={clsxm('block w-full', className)} style={style}>
+    <div className={clsxm('block w-full')} style={style}>
       <label
         htmlFor={name}
         className={clsxm('text-grey1 mb-2 block text-base', [
@@ -60,7 +60,8 @@ const Input = (props: IInputProps) => {
             'border-grey2 text-grey1 rounded border px-4 py-3 text-base  disabled:cursor-not-allowed',
             'focus:border-black focus:outline-none  focus:ring-black',
             [error && 'border-red text-red focus:border-red focus:ring-red'],
-            [type === 'password' && 'pr-12']
+            [type === 'password' && 'pr-12'],
+            [className]
           )}
         />
         {type === 'password' && (
