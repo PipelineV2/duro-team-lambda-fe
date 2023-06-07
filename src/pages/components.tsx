@@ -108,6 +108,13 @@ export default function ComponentsPage() {
       <Status />
 
       <Book />
+
+      {/* Uncomment to view modal  */}
+      {/* <Modal
+        title='Successful!'
+        text='You have booked a spot on the queue. Your number is:'
+        number='05'
+      /> */}
     </Layout>
   );
 }
