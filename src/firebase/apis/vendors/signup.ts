@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 
 import { auth, db } from '@/firebase/FirebaseStore';
-import { generateRandomCharacters } from '@/utils';
+import { createFormLink } from '@/utils';
 import { signupProps, signupReturnDataProps } from '@/utils/types';
 // Signup Auth
 const SignupApi = async ({
@@ -35,7 +35,7 @@ const SignupApi = async ({
           phoneNumber: phoneNumber,
           businessName: businessName,
           industry: industry,
-          formLink: `${businessName}-${generateRandomCharacters(6)}`,
+          formLink: createFormLink(businessName),
           employeeSize: employeeSize,
           subscribed: false,
           openingHour: '8:00 am',

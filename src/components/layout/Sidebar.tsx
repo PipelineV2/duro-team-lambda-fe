@@ -24,7 +24,7 @@ const NavLinkItem = (props: (typeof NavMenu)[0]) => {
     <Link
       href={link}
       className={clsx(
-        'hover:bg-light-green hover:text-green mb-6 flex items-center gap-4 px-4 py-3',
+        'hover:bg-light-green hover:text-green mb-2 flex items-center gap-4 px-4 py-3',
         isActive ? 'text-green bg-light-green' : 'text-gray1'
       )}
       key={text}
@@ -51,7 +51,7 @@ const Sidebar = () => {
   return (
     <aside
       className={clsxm(
-        'border-r-grey5 fixed z-40 flex h-screen max-h-screen w-72 flex-col justify-between border-x bg-white p-6 pr-2.5',
+        'border-r-grey5 fixed z-40 flex h-screen max-h-screen w-72 flex-col justify-start border-x bg-white p-6 pr-2.5',
         [
           isSidebarOpen && 'translate-x-0',
           !isSidebarOpen && '-translate-x-full md:translate-x-0',
@@ -59,24 +59,24 @@ const Sidebar = () => {
         ]
       )}
     >
-      <nav>
-        <Link href='/' className='mb-3 inline-block md:mb-20'>
-          <Duro className='h-[33px] w-[88px]' />
-        </Link>
-        <button
-          className={clsxm('fixed top-[45px] md:hidden', [
-            !isSidebarOpen && 'right-[-30px] ',
-            isSidebarOpen && 'right-[10px] ',
-            'transition-all duration-300 ease-in-out',
-          ])}
-          onClick={handleClickButton}
-        >
-          {isSidebarOpen ? (
-            <CloseMenuIcon className='text-2xl' />
-          ) : (
-            <MenuIcon className='text-2xl' />
-          )}
-        </button>
+      <Link href='/' className='mb-3 inline-block md:mb-20'>
+        <Duro className='text-green h-[33px] w-[88px]' />
+      </Link>
+      <button
+        className={clsxm('fixed top-[45px] md:hidden', [
+          !isSidebarOpen && 'right-[-30px] ',
+          isSidebarOpen && 'right-[10px] ',
+          'transition-all duration-300 ease-in-out',
+        ])}
+        onClick={handleClickButton}
+      >
+        {isSidebarOpen ? (
+          <CloseMenuIcon className='text-2xl' />
+        ) : (
+          <MenuIcon className='text-2xl' />
+        )}
+      </button>
+      <nav className='border-gray5 mb-2 border-b pb-6'>
         {TopNavMenu.map((item) => {
           return <NavLinkItem {...item} key={item.text} />;
         })}

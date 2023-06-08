@@ -13,7 +13,7 @@ export interface ISelectProps
 }
 
 const Select = (props: ISelectProps) => {
-  const { label, error, placeholder, options } = props;
+  const { label, error, placeholder, options, className } = props;
   return (
     <div className='block w-full'>
       <label
@@ -33,7 +33,8 @@ const Select = (props: ISelectProps) => {
             'w-full appearance-none caret-transparent',
             'border-gray2 text-grey1 rounded border px-4 py-3 text-base  disabled:cursor-not-allowed',
             'focus:border-black focus:outline-none  focus:ring-black',
-            [error && 'border-red text-red focus:border-red focus:ring-red']
+            [error && 'border-red text-red focus:border-red focus:ring-red'],
+            [className]
           )}
         >
           <option value=''>{placeholder}</option>

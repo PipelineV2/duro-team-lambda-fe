@@ -3,7 +3,7 @@ import { collection, getDocs, query, where } from '@firebase/firestore';
 import { signOut } from 'firebase/auth';
 
 import { auth, db } from '@/firebase/FirebaseStore';
-import { availReturnDataProps } from '@/utils/types';
+import { availProps, availReturnDataProps } from '@/utils/types';
 
 // Availability Auth
 const AvailabilityApi = async (): Promise<availReturnDataProps | void> => {
@@ -14,7 +14,7 @@ const AvailabilityApi = async (): Promise<availReturnDataProps | void> => {
       const availQuery = query(availDetails, where('email', '==', user.email));
       const querySnapshot = await getDocs(availQuery);
       if (querySnapshot.docs.length > 0) {
-        const availData: any = {
+        const availData: availProps = {
           subscribed: querySnapshot.docs[0].data().subscribed,
           openingHour: querySnapshot.docs[0].data().openingHour,
           closingHour: querySnapshot.docs[0].data().closingHour,
