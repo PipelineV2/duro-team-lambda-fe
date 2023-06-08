@@ -106,11 +106,9 @@ export default function ComponentsPage() {
 
       <Status />
 
-
       <Book />
 
       <AvailabilityCard />
-
     </Layout>
   );
 }
