@@ -16,7 +16,7 @@ import Typography from '@/components/text';
 import { SettingsApi } from '@/firebase/apis';
 
 const baseLink =
-  typeof window !== 'undefined' && `${window.location.origin}/queueform`;
+  typeof window !== 'undefined' && `${window.location.origin}/booking`;
 
 const geofenceDataSettings = [
   {

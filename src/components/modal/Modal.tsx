@@ -16,7 +16,7 @@ const viewQueue = () => {
 
 const Modal: React.FC<Props> = ({ title, text, number }) => {
   return (
-    <div className=' fixed left-0 top-0 z-[100] flex h-[100vh] w-[100vw] items-center justify-center bg-black bg-opacity-80 text-center'>
+    <div className=' fixed inset-0 z-50 grid items-center justify-center bg-black bg-opacity-80 text-center'>
       <div className=' shadow-shadow2 w-[20rem] rounded-md bg-white p-[1rem]'>
         <Typography variant='h3' className='dark mb-[1rem]'>
           {title}
