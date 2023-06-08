@@ -8,13 +8,10 @@ import Button from '@/components/buttons/Button';
 import Card from '@/components/card';
 import { Chart } from '@/components/chart/Chart';
 import Info from '@/components/info';
-import Input from '@/components/input';
 import Layout from '@/components/layout/Layout';
-import Book from '@/components/mobile-form';
+import Modal from '@/components/modal';
 import Progress from '@/components/progress';
-import Select from '@/components/select';
 import Seo from '@/components/Seo';
-import Status from '@/components/status';
 import Table from '@/components/Table';
 
 import { SignupApi } from '@/firebase/apis';
@@ -80,19 +77,19 @@ export default function ComponentsPage() {
         />
 
         <div className='grid w-[90%] max-w-[420px] gap-2'>
-          <Input
+          {/* <Input
             label='Work Email'
             placeholder='Work email'
             type='password'
             name='password'
-          />
+          /> */}
 
-          <Select
+          {/* <Select
             label='Industry'
             placeholder='Select Work email'
             options={['Banking', 'Dancing']}
             name='industry'
-          />
+          /> */}
 
           <Progress currentStep={1} totalStep={3} />
 
@@ -104,16 +101,16 @@ export default function ComponentsPage() {
         </div>
       </div>
 
-      <Status />
+      {/* <Status />
 
-      <Book />
+      <Book /> */}
 
       {/* Uncomment to view modal  */}
-      {/* <Modal
+      <Modal
         title='Successful!'
         text='You have booked a spot on the queue. Your number is:'
         number='05'
-      /> */}
+      />
       <AvailabilityCard />
     </Layout>
   );
