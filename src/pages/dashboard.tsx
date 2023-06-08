@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import logger from '@/lib/logger';
 
 import Card from '@/components/card';
 import { Chart } from '@/components/chart/Chart';
@@ -7,6 +9,8 @@ import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 import Table from '@/components/Table';
 import Typography from '@/components/text';
+
+import { DashboardApi } from '@/firebase/apis';
 
 import data from '../utils/data.json';
 
@@ -36,6 +40,32 @@ const databaseData = [
 ];
 
 const Dashboard = () => {
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    const getData = async () => {
+      setIsLoading(true);
+      DashboardApi()
+        .then((res) => {
+          setIsLoading(false);
+          logger(res);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          logger(err);
+        });
+    };
+    if (mounted) {
+      getData();
+    }
+
+    return () => {
+      mounted = true;
+    };
+  }, []);
+
   return (
     <Layout>
       <Seo templateTitle='Dashboard' description='Dashboard Statistics' />

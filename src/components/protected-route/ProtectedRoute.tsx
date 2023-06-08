@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 
 import { useAuth } from '@/context/auth';
 
-const ProtectedPage = ({
+const ProtectedRoute = ({
   children,
 }: {
   children: React.ReactNode;
@@ -13,10 +13,10 @@ const ProtectedPage = ({
   const { user, loading } = useAuth();
 
   useEffect(() => {
-    if (!loading && !user) router.push('/');
+    if (!loading && !user) router.push('/login');
   }, [user, router, loading]);
 
-  return <div>{children}</div>;
+  return <>{user ? children : null}</>;
 };
 
-export default ProtectedPage;
+export default ProtectedRoute;

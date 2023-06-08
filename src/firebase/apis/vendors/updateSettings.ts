@@ -13,6 +13,7 @@ import { auth, db } from '@/firebase/FirebaseStore';
 import { createFormLink, replaceKeyValues } from '@/utils';
 import { settReturnDataProps } from '@/utils/types';
 import { updateSettingsProps } from '@/utils/types';
+
 // Availability Auth
 const UpdateSettingsApi = async ({
   type, // "geofenceData" | "link"

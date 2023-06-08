@@ -68,14 +68,11 @@ export function AuthContextProvider({
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setLoading(false);
         setUser(formatAuthUser(user));
-        return;
       } else {
-        setLoading(false);
         setUser(null);
-        return;
       }
+      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -122,6 +119,8 @@ export function AuthContextProvider({
 
   // Provide the AuthContext value to the children components
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>
+      {loading ? null : children}
+    </AuthContext.Provider>
   );
 }
