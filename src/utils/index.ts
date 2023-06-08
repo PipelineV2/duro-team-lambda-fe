@@ -1,4 +1,5 @@
 import { graphDataProps, graphDataReturnProps } from '@/utils/types';
+
 export const generateRandomCharacters = (length: number) => {
   // Generate a random number between 0 and 36^length.
   const randomNumber = Math.floor(Math.random() * 36 ** length);

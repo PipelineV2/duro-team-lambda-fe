@@ -1,12 +1,16 @@
 import Link from 'next/link';
 import React from 'react';
 
+import useRedirectToDashboard from '@/hooks/useRedirectToDashboard';
+
 import Button from '@/components/buttons';
 import Typography from '@/components/text';
 
 import DuroLogo from '~/svg/Duro.svg';
 
 const Verify = () => {
+  useRedirectToDashboard();
+
   return (
     <main className='h-screen w-screen p-3 '>
       <div className='m-auto w-full max-w-[418px] pt-5 md:pt-20 lg:pt-[105px]'>

@@ -1,3 +1,4 @@
+import { useField } from 'formik';
 import React, { CSSProperties, useState } from 'react';
 
 import clsxm from '@/lib/clsxm';
@@ -9,7 +10,7 @@ export interface IInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   placeholder: string;
-  error?: boolean | string;
+  // error?: boolean | string;
   className?: string | undefined;
   style?: CSSProperties;
   name: string;
@@ -22,7 +23,8 @@ export interface IInputProps
 }
 
 const Input = (props: IInputProps) => {
-  const { label, error, type = 'text', className, style, name } = props;
+  const [field, meta] = useField(props);
+  const { label, type = 'text', className, style, name } = props;
 
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
@@ -38,18 +40,21 @@ const Input = (props: IInputProps) => {
     return setIsPasswordShown((shown) => !shown);
   };
 
+  // console.log({ field, meta, helpers });
+
   return (
     <div className={clsxm('block w-full')} style={style}>
       <label
         htmlFor={name}
         className={clsxm('text-grey1 mb-2 block text-base', [
-          error && 'text-red',
+          meta.error && 'text-red',
         ])}
       >
         {label}
       </label>
       <div className='relative w-full'>
         <input
+          {...field}
           {...props}
           type={handlePasswordType()}
           title={label}
@@ -59,7 +64,10 @@ const Input = (props: IInputProps) => {
             'placeholder:text-grey4 w-full placeholder:text-base',
             'border-grey2 text-grey1 rounded border px-4 py-3 text-base  disabled:cursor-not-allowed',
             'focus:border-black focus:outline-none  focus:ring-black',
-            [error && 'border-red text-red focus:border-red focus:ring-red'],
+            [
+              meta.error &&
+                'border-red text-red focus:border-red focus:ring-red',
+            ],
             [type === 'password' && 'pr-12'],
             [className]
           )}
@@ -76,7 +84,9 @@ const Input = (props: IInputProps) => {
             )}
           </button>
         )}
-        {error && <p className='text-red text-xs'>{error}</p>}
+        {meta.touched && meta.error ? (
+          <p className='text-red pt-1 text-xs'>{meta.error}</p>
+        ) : null}
       </div>
     </div>
   );

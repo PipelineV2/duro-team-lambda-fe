@@ -2,11 +2,8 @@
 import { sendPasswordResetEmail } from 'firebase/auth';
 
 import { auth } from '@/firebase/FirebaseStore';
-import { resetReturnDataProps } from '@/utils/types';
 
-const ResetPasswordApi = async (
-  email: string
-): Promise<resetReturnDataProps | string | undefined> => {
+const ResetPasswordApi = async (email: string) => {
   try {
     const res: any = await sendPasswordResetEmail(auth, email);
     if (typeof res === 'undefined') {

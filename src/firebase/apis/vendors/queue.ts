@@ -4,12 +4,11 @@ import { signOut } from 'firebase/auth';
 
 import { auth, db } from '@/firebase/FirebaseStore';
 import { dateFormaterString } from '@/utils';
-import { createQueueReturnDataProps, queueProps } from '@/utils/types';
+import { queueProps } from '@/utils/types';
+
 // Get user details
 
-const QueueApi = async (
-  date: string
-): Promise<createQueueReturnDataProps | void> => {
+const QueueApi = async (date: string) => {
   const queueArray: queueProps[] = [];
   let data: queueProps[] = [];
   let sortedArray: queueProps[] = [];
