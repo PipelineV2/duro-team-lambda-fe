@@ -15,8 +15,18 @@ export type joinQueueProps = {
   formLink: string;
 };
 export type updateAvailabilityProps = {
-  type: string;
-  value: string;
+  closingHour: string;
+  operation: string;
+  openingHour: string;
+  workingDays: {
+    monday: boolean;
+    tuesday: boolean;
+    wednesday: boolean;
+    thursday: boolean;
+    friday: boolean;
+    saturday: boolean;
+    sunday: boolean;
+  };
 };
 export type updateSettingsProps = {
   type: string;

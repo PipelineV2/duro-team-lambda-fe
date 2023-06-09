@@ -341,23 +341,19 @@ The `UpdateAvailabilityApi` function is POST method that allow vendor to update 
 **Parameters:**
 
 ```
-  type: string; //  "openingHour" | "operation" | "closingHour" | "workingDays"
-  value: string;
+  closingHour: string;
+  operation: string;
+  openingHour: string;
+  workingDays: {
+    monday: boolean;
+    tuesday: boolean;
+    wednesday: boolean;
+    thursday: boolean;
+    friday: boolean;
+    saturday: boolean;
+    sunday: boolean;
+  };
 
-// Please carefully understand the respective value expected for each type below
-  switch (type) {
-    case 'workingDays':
-      // value can be "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
-
-    case 'closingHour':
-      // value expected is a string in this format `6:00 pm`
-    case 'openingHour':
-      // value expected is a string in this format `8:00 am`
-    case 'operation':
-      // value can be "operation" | "break" | "closed"
-    default:
-      break;
-  }
 ```
 
 **Returns:**
@@ -644,8 +640,18 @@ signin()
 
 <!-- Update Availability Screen -->
    const update = {
-      type: 'workingDays',
-      value: 'thursday',
+      closingHour: '8:00 pm',
+      operation: 'break',
+      openingHour: '8:00 am',
+      workingDays: {
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true,
+        saturday: false,
+        sunday: false,
+      },
     };
     UpdateAvailabilityApi(update).then((res) => console.log(res));
 

@@ -10,13 +10,15 @@ import {
 import { signOut } from 'firebase/auth';
 
 import { auth, db } from '@/firebase/FirebaseStore';
-import { changeKeyToInverseBoolean, changeKeyToTrue } from '@/utils';
+import { changeKeyToTrue } from '@/utils';
 import { availReturnDataProps } from '@/utils/types';
 import { availProps, updateAvailabilityProps } from '@/utils/types';
 // Availability Auth
 const UpdateAvailabilityApi = async ({
-  type, // "openingHour" | "operation" | "closingHour" | "workingDays"
-  value,
+  closingHour,
+  operation,
+  openingHour,
+  workingDays,
 }: updateAvailabilityProps): Promise<availReturnDataProps | void> => {
   try {
     const user = await auth.currentUser;
@@ -34,63 +36,28 @@ const UpdateAvailabilityApi = async ({
           workingDays: querySnapshot.docs[0].data().workingDays,
         };
         const availRef = doc(db, 'Vendors', user.uid);
-
-        switch (type) {
-          case 'workingDays':
-            // value can be "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
-            changeKeyToInverseBoolean(availData.workingDays[0], value);
-
-            await setDoc(
-              availRef,
-              {
-                workingDays: availData.workingDays,
-              },
-              { merge: true }
-            );
-
-            break;
-
-          case 'closingHour':
-            availData.closingHour = value;
-            await setDoc(
-              availRef,
-              {
-                openingHour: availData.closingHour,
-              },
-              { merge: true }
-            );
-
-            break;
-
-          case 'openingHour':
-            availData.openingHour = value;
-            await setDoc(
-              availRef,
-              {
-                openingHour: availData.openingHour,
-              },
-              { merge: true }
-            );
-
-            break;
-
-          case 'operation':
-            // value can be "operation" | "break" | "closed"
-            changeKeyToTrue(availData.currentOperationStatus[0], value);
-
-            await setDoc(
-              availRef,
-              {
-                currentOperationStatus: availData.currentOperationStatus,
-              },
-              { merge: true }
-            );
-
-            break;
-
-          default:
-            break;
-        }
+        availData.closingHour = closingHour;
+        availData.openingHour = openingHour;
+        changeKeyToTrue(availData.currentOperationStatus, operation);
+        availData.workingDays[0] = {
+          monday: workingDays.monday,
+          tuesday: workingDays.tuesday,
+          wednesday: workingDays.wednesday,
+          thursday: workingDays.thursday,
+          friday: workingDays.friday,
+          saturday: workingDays.saturday,
+          sunday: workingDays.sunday,
+        };
+        await setDoc(
+          availRef,
+          {
+            workingDays: availData.workingDays,
+            closingHour: availData.closingHour,
+            openingHour: availData.openingHour,
+            currentOperationStatus: availData.currentOperationStatus,
+          },
+          { merge: true }
+        );
 
         return {
           status: 200,
