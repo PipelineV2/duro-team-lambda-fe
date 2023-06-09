@@ -8,7 +8,7 @@ import { vendorReturnDataProps } from '@/utils/types';
 // Get user details
 const VendorFormDetailsApi = async (
   formLinkID: string
-): Promise<vendorReturnDataProps | void> => {
+): Promise<vendorReturnDataProps | undefined> => {
   try {
     const vendorDetails = collection(db, 'Vendors');
 

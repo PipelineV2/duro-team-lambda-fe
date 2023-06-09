@@ -15,7 +15,7 @@ export default function Header() {
   const { date, time } = useDate();
   const { TRIAL_PERIOD_TEXT } = strings;
   return (
-    <header className='fixed top-0 z-10  w-full  bg-[#FBFBFB] md:pl-72'>
+    <header className='fixed top-0 z-10  w-full  bg-[#FBFBFB] lg:pl-72'>
       <div className='border-b-grey5 h-[96px] items-center justify-between border-b px-6 pt-3 md:flex'>
         <Typography variant='secondary' className='text-grey3'>
           {date} | {time}
@@ -40,8 +40,8 @@ export default function Header() {
           </ul>
         </nav>
       </div>
-      <div className='border-b-grey5 flex-wrap items-center  justify-end gap-4  border-b px-6 py-4 md:flex'>
-        <Typography variant='body2' className='text-grey3 pb-3 md:pb-0'>
+      <div className='border-b-grey5 gap:8 flex-wrap  items-center justify-end border-b  px-6 py-4 md:flex lg:gap-12'>
+        <Typography variant='body2' className='text-grey3 pb-3 lg:pb-0'>
           {TRIAL_PERIOD_TEXT}
         </Typography>
         <div className='flex'>

@@ -87,16 +87,18 @@ export type userReturnDataProps = {
     emailVerified?: boolean;
   };
 };
+
+export type TVendorDataProps = {
+  phoneNumber: string;
+  businessName: string;
+  isOperating: boolean;
+  isWorkingDay: boolean;
+  isWorkHours: boolean;
+};
 export type vendorReturnDataProps = {
   status: number;
   message: string;
-  vendorData?: {
-    phoneNumber: string;
-    businessName: string;
-    isOperating: boolean;
-    isWorkingDay: boolean;
-    isWorkHours: boolean;
-  };
+  vendorData?: TVendorDataProps;
 };
 export type createQueueReturnDataProps = {
   status: number;

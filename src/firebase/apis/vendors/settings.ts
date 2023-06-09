@@ -2,13 +2,15 @@
 import { collection, getDocs, query, where } from '@firebase/firestore';
 import { signOut } from 'firebase/auth';
 
+import logger from '@/lib/logger';
+
 import { auth, db } from '@/firebase/FirebaseStore';
-import { settingsReturnDataProps } from '@/utils/types';
 
 // Availability Auth
-const SettingsApi = async (): Promise<settingsReturnDataProps | void> => {
+const SettingsApi = async () => {
   try {
     const user = await auth.currentUser;
+    logger('user', JSON.stringify(user));
     if (user) {
       const settingsDetails = collection(db, 'Vendors');
       const settingsQuery = query(
@@ -28,6 +30,11 @@ const SettingsApi = async (): Promise<settingsReturnDataProps | void> => {
           data: settingsData,
         };
       }
+      return {
+        status: 200,
+        message: 'settings screen data retrieved successful',
+        data: null,
+      };
     } else {
       // User is signed out
       signOut(auth);

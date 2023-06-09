@@ -54,16 +54,16 @@ const Sidebar = () => {
         'border-r-grey5 fixed z-40 flex h-screen max-h-screen w-72 flex-col justify-start border-x bg-white p-6 pr-2.5',
         [
           isSidebarOpen && 'translate-x-0',
-          !isSidebarOpen && '-translate-x-full md:translate-x-0',
+          !isSidebarOpen && '-translate-x-full lg:translate-x-0',
           'transition-all duration-300 ease-in-out',
         ]
       )}
     >
       <Link href='/' className='mb-3 inline-block md:mb-20'>
-        <Duro className='h-[33px] w-[88px]' />
+        <Duro className='text-green h-[33px] w-[88px]' />
       </Link>
       <button
-        className={clsxm('fixed top-[45px] md:hidden', [
+        className={clsxm('fixed top-[45px] lg:hidden', [
           !isSidebarOpen && 'right-[-30px] ',
           isSidebarOpen && 'right-[10px] ',
           'transition-all duration-300 ease-in-out',

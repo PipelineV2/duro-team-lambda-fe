@@ -5,9 +5,9 @@ import { signOut } from 'firebase/auth';
 import QueueApi from '@/firebase/apis/vendors/queue';
 import { auth, db } from '@/firebase/FirebaseStore';
 import { graphTransformer } from '@/utils';
-import { dashboardProps, dashboardReturnDataProps } from '@/utils/types';
+
 // Availability Auth
-const DashboardApi = async (): Promise<dashboardReturnDataProps | void> => {
+const DashboardApi = async () => {
   try {
     const user = await auth.currentUser;
     if (user) {
@@ -28,9 +28,8 @@ const DashboardApi = async (): Promise<dashboardReturnDataProps | void> => {
       const inprogressSnapshot = await getDocs(inprogressQuery);
 
       const graphData: any = await QueueApi('');
-
       if (dashboardSnapshot.docs.length > 0) {
-        const dashboardData: dashboardProps = {
+        const dashboardData = {
           queueLength: dashboardSnapshot.docs.length,
           attendedTo: attendedSnapshot.docs.length,
           leftQueue:
@@ -49,6 +48,16 @@ const DashboardApi = async (): Promise<dashboardReturnDataProps | void> => {
           data: dashboardData,
         };
       }
+      return {
+        status: 200,
+        data: {
+          queueLength: 0,
+          attendedTo: 0,
+          leftQueue: 0,
+          queueProgress: 0,
+          totalVisits: 0,
+        },
+      };
     } else {
       // User is signed out
       signOut(auth);

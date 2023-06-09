@@ -2,6 +2,8 @@ import React from 'react';
 
 import clsxm from '@/lib/clsxm';
 
+import Typography from '@/components/text';
+
 type Props = {
   progress: number;
   width?: number;
@@ -19,9 +21,9 @@ const CircularProgress = (props: Props) => {
         width: width,
       }}
     >
-      <p
+      <div
         className={clsxm(
-          'grid  place-items-center bg-white',
+          'flex  flex-col items-center justify-center gap-4 bg-white',
           'text-grey3 rounded-full text-[40px]'
         )}
         style={{
@@ -29,8 +31,9 @@ const CircularProgress = (props: Props) => {
           width: width - 8,
         }}
       >
-        {progress}%
-      </p>
+        <p>{progress}%</p>
+        <Typography variant='body2'>Complete</Typography>
+      </div>
     </div>
   );
 };

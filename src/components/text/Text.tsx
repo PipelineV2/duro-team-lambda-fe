@@ -12,6 +12,7 @@ const TextVariant = [
   'secondary',
   'body2',
   'body1',
+  'body3',
 ] as const;
 
 type TextProps = {
@@ -60,7 +61,7 @@ const useTextVariant = (variant: (typeof TextVariant)[number]) => {
     secondary: clsxm('text-xs leading-[1.0625rem]'),
     body2: clsxm('text-base leading-[1.375rem]'),
     body1: clsxm('text-xl leading-[1.75rem]'),
-    body3: clsxm('text-base leading-[1.75rem]'),
+    body3: clsxm('text-sm leading-[1.75rem]'),
   };
 
   return style[variant];
