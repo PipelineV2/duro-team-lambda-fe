@@ -41,7 +41,7 @@ type Props = {
 const Book = (props: Props) => {
   const { businessName, isOperating, isWorkHours, isWorkingDay, phoneNumber } =
     props.vendor;
-
+  // console.log(props);
   const submitForm = async (values: IValues) => {
     //  /set the values to context for later retrival
     // setUserRegistrationDetails({ ...values });
@@ -62,56 +62,63 @@ const Book = (props: Props) => {
         </Typography>
 
         <div className=' flex  flex-col justify-between'>
-          <Formik
-            initialValues={{
-              firstName: '',
-              phoneNumber: '',
-              purposeOfVisit: '',
-            }}
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              submitForm(values);
-            }}
-          >
-            {(props: FormikProps<IValues>) => (
-              <Form>
-                <div className='flex flex-col gap-4'>
-                  <Input
-                    label='First name'
-                    placeholder='First name'
-                    name='firstName'
-                    className='border-grey5 text-grey1'
-                  />
-                  <Input
-                    label='Phone number'
-                    placeholder='Phone number'
-                    name='phoneNumber'
-                    className='border-grey5 text-grey1'
-                  />
-                  <Select
-                    label='Purpose of visit'
-                    name='purposeOfVisit'
-                    className='border-grey5 text-grey1'
-                    placeholder='Purpose of visit'
-                    options={[
-                      'Account creation',
-                      'Consultation',
-                      'File a complain',
-                    ]}
-                  />
+          {!isOperating && (
+            <Typography variant='body1' className=' mb-[2rem] text-center'>
+              This business is currently not operating
+            </Typography>
+          )}
+          {isOperating && (
+            <Formik
+              initialValues={{
+                firstName: '',
+                phoneNumber: '',
+                purposeOfVisit: '',
+              }}
+              validationSchema={validationSchema}
+              onSubmit={(values) => {
+                submitForm(values);
+              }}
+            >
+              {(props: FormikProps<IValues>) => (
+                <Form>
+                  <div className='flex flex-col gap-4'>
+                    <Input
+                      label='First name'
+                      placeholder='First name'
+                      name='firstName'
+                      className='border-grey5 text-grey1'
+                    />
+                    <Input
+                      label='Phone number'
+                      placeholder='Phone number'
+                      name='phoneNumber'
+                      className='border-grey5 text-grey1'
+                    />
+                    <Select
+                      label='Purpose of visit'
+                      name='purposeOfVisit'
+                      className='border-grey5 text-grey1'
+                      placeholder='Purpose of visit'
+                      options={[
+                        'Account creation',
+                        'Consultation',
+                        'File a complain',
+                      ]}
+                    />
 
-                  <Button
-                    text='Join the queue'
-                    variant='primary'
-                    className='mt-1 text-center'
-                    size='large'
-                    isFullwidth={true}
-                    onClick={() => props.handleSubmit()}
-                  />
-                </div>
-              </Form>
-            )}
-          </Formik>
+                    <Button
+                      text='Join the queue'
+                      variant='primary'
+                      className='mt-1 text-center'
+                      size='large'
+                      isFullwidth={true}
+                      onClick={() => props.handleSubmit()}
+                    />
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          )}
         </div>
       </div>
     </main>

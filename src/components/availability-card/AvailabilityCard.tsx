@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 import { Form, Formik, FormikHelpers } from 'formik';
 import React, { useState } from 'react';
 import { RiPencilLine } from 'react-icons/ri';
@@ -10,6 +11,9 @@ import Button from '@/components/buttons';
 import Checkbox from '@/components/checkbox';
 import Select from '@/components/select';
 import Typography from '@/components/text';
+
+import { TworkingDaysProps } from '@/pages/availability';
+import { updateAvailabilityProps } from '@/utils/types';
 
 const days = [
   {
@@ -59,7 +63,24 @@ export const validationSchema = Yup.object().shape({
   closingHour: Yup.string().required('Closing Hour is required'),
 });
 
-const AvailabilityCard = () => {
+interface IAvalabilityProps {
+  handleUpdateAvailability: ({
+    type,
+    value,
+  }: updateAvailabilityProps) => Promise<void>;
+  avalabilityValues: {
+    closingHour: string;
+    openingHour: string;
+    subscribed: boolean;
+    workingDays: TworkingDaysProps;
+  };
+}
+
+const AvailabilityCard = (props: IAvalabilityProps) => {
+  const {
+    handleUpdateAvailability,
+    avalabilityValues: { closingHour, openingHour, subscribed, workingDays },
+  } = props;
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditing = () => {
@@ -72,100 +93,142 @@ const AvailabilityCard = () => {
     logger({ values, actions });
   };
 
+  logger({ closingHour, openingHour });
+
+  const handleChange = async (data: string) => {
+    try {
+      const result = await handleUpdateAvailability({
+        type: 'workingDays',
+        value: data,
+      });
+      // console.log({ result });
+    } catch (error) {
+      // console.log('error', error);
+    }
+  };
+
   return (
     <Formik
       initialValues={{
-        openingHour: '',
-        closingHour: '',
+        openingHour: openingHour || '',
+        closingHour: closingHour || '',
       }}
       validationSchema={validationSchema}
       onSubmit={(values, actions) => {
         submitForm(values, actions);
       }}
     >
-      {() => (
-        <Form>
-          <div className=' shadow-s2 mt-5 rounded-md bg-white p-3 md:mt-8 md:p-8'>
-            <div className=' flex items-start justify-between'>
+      {(props: FormikHelpers<Values>) => {
+        return (
+          <Form>
+            {JSON.stringify(props, null, 2)}
+            <div className=' shadow-s2 mt-5 rounded-md bg-white p-3 md:mt-8 md:p-8'>
+              <div className=' flex items-start justify-between'>
+                <div className=''>
+                  <Typography variant='body1' className=' text-grey1 mb-2'>
+                    Set your availability to allow queues
+                  </Typography>
+                  <Typography variant='body2' className=' text-grey3 '>
+                    Let Duro know when you’re typically available to accept
+                    meetings
+                  </Typography>
+                </div>
+                <button
+                  title='edit'
+                  type='button'
+                  disabled={isEditing}
+                  onClick={() => setIsEditing(true)}
+                  className={clsxm(
+                    'hover:bg-grey5 rounded-full p-2 transition-all',
+                    [isEditing && 'cursor-not-allowed opacity-20']
+                  )}
+                >
+                  <RiPencilLine className=' text-grey3 cursor-pointer text-2xl' />
+                </button>
+              </div>
+
               <div className=''>
-                <Typography variant='body1' className=' text-grey1 mb-2'>
-                  Set your availability to allow queues
+                <Typography variant='body2' className=' mt-[2rem]'>
+                  Open hours
                 </Typography>
-                <Typography variant='body2' className=' text-grey3 '>
-                  Let Duro know when you’re typically available to accept
-                  meetings
+                <div className=' flex w-full max-w-[300px] flex-col items-start gap-3   md:max-w-[600px] md:flex-row md:gap-4'>
+                  <Select
+                    label=''
+                    placeholder='Select Opening Hour'
+                    options={['8:00 am', '9:00 am', '10:00 am', '11:00 am']}
+                    className='border-grey5 text-grey1'
+                    name='openingHour'
+                    id='openingHour'
+                    value={openingHour}
+                    onChange={(e) => {
+                      // console.log(e);
+                    }}
+                    onChangeCapture={(e) => {
+                      // console.log(e);
+                      logger({ e });
+                    }}
+                  />
+                  <Typography variant='body2' className='self-center'>
+                    to
+                  </Typography>
+                  <Select
+                    label=''
+                    placeholder='Select Closing Hour'
+                    options={[
+                      '4:00 pm',
+                      '5:00 pm',
+                      '6:00 pm',
+                      '7:00 pm',
+                      '8:00pm',
+                      '9:00 pm',
+                      '10:00 pm',
+                      '11:00 pm',
+                    ]}
+                    className='border-grey5 text-grey1'
+                    name='closingHour'
+                    id='closingHour'
+                  />
+                </div>
+              </div>
+
+              <div className=''>
+                <Typography variant='body2' className=' mb-2 mt-[2rem]'>
+                  Available days
                 </Typography>
+
+                <div className=' border-grey5 grid max-w-[250px] grid-cols-1 rounded-lg  border md:max-w-full md:grid-cols-7'>
+                  {days.map((e, index) => (
+                    <div
+                      className={clsxm(
+                        'border-r-grey5 rounded-lg border-b p-[2rem] md:border-b-0 md:border-r',
+                        [index === days.length - 1 && 'border-none']
+                      )}
+                      key={e.id}
+                    >
+                      <Checkbox
+                        label={e.day}
+                        value={e.value}
+                        isRow={false}
+                        onChange={handleChange}
+                        checked={(workingDays as any)[e.value]}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-              <button
-                title='edit'
-                type='button'
-                disabled={isEditing}
-                onClick={() => setIsEditing(true)}
-                className={clsxm(
-                  'hover:bg-grey5 rounded-full p-2 transition-all',
-                  [isEditing && 'cursor-not-allowed opacity-20']
-                )}
-              >
-                <RiPencilLine className=' text-grey3 cursor-pointer text-2xl' />
-              </button>
+
+              <Button
+                text='Save'
+                onClick={handleEditing}
+                variant='primary'
+                className={clsxm('mt-[2rem] px-7 transition-all', [
+                  isEditing ? 'visible' : 'invisible',
+                ])}
+              />
             </div>
-
-            <div className=''>
-              <Typography variant='body2' className=' mt-[2rem]'>
-                Open hours
-              </Typography>
-              <div className=' flex w-full max-w-[300px] flex-col items-start gap-3   md:max-w-[600px] md:flex-row md:gap-4'>
-                <Select
-                  label=''
-                  placeholder='Select Opening Hour'
-                  options={['8:00 am', '9:00 am', '10:00 am', '11:00 am']}
-                  className='border-grey5 text-grey1'
-                  name='openingHour'
-                />
-                <Typography variant='body2' className='self-center'>
-                  to
-                </Typography>
-                <Select
-                  label=''
-                  placeholder='Select Closing Hour'
-                  options={['4:00 pm', '5:00 pm', '6:00 pm', '7:00 pm']}
-                  className='border-grey5 text-grey1'
-                  name='closingHour'
-                />
-              </div>
-            </div>
-
-            <div className=''>
-              <Typography variant='body2' className=' mb-2 mt-[2rem]'>
-                Available days
-              </Typography>
-
-              <div className=' border-grey5 grid max-w-[250px] grid-cols-1 rounded-lg  border md:max-w-full md:grid-cols-7'>
-                {days.map((e, index) => (
-                  <div
-                    className={clsxm(
-                      'border-r-grey5 rounded-lg border-b p-[2rem] md:border-b-0 md:border-r',
-                      [index === days.length - 1 && 'border-none']
-                    )}
-                    key={e.id}
-                  >
-                    <Checkbox label={e.day} value={e.value} isRow={false} />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <Button
-              text='Save'
-              onClick={handleEditing}
-              variant='primary'
-              className={clsxm('mt-[2rem] px-7 transition-all', [
-                isEditing ? 'visible' : 'invisible',
-              ])}
-            />
-          </div>
-        </Form>
-      )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 };
