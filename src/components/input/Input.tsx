@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { CSSProperties, useState } from 'react';
 
 import clsxm from '@/lib/clsxm';
 
@@ -10,6 +10,9 @@ export interface IInputProps
   label: string;
   placeholder: string;
   error?: boolean | string;
+  className?: string | undefined;
+  style?: CSSProperties;
+  name: string;
 
   // type?: HTMLInputTypeAttribute;
   /**
@@ -19,7 +22,7 @@ export interface IInputProps
 }
 
 const Input = (props: IInputProps) => {
-  const { label, error, type = 'text' } = props;
+  const { label, error, type = 'text', className, style, name } = props;
 
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
@@ -36,9 +39,9 @@ const Input = (props: IInputProps) => {
   };
 
   return (
-    <div className='block w-full'>
+    <div className={clsxm('block w-full', className)} style={style}>
       <label
-        htmlFor={label}
+        htmlFor={name}
         className={clsxm('text-grey1 mb-2 block text-base', [
           error && 'text-red',
         ])}
@@ -50,10 +53,10 @@ const Input = (props: IInputProps) => {
           {...props}
           type={handlePasswordType()}
           title={label}
-          name={label}
-          id={label}
+          name={name}
+          id={name}
           className={clsxm(
-            'placeholder:text-grey4 w-full placeholder:text-xs',
+            'placeholder:text-grey4 w-full placeholder:text-base',
             'border-grey2 text-grey1 rounded border px-4 py-3 text-base  disabled:cursor-not-allowed',
             'focus:border-black focus:outline-none  focus:ring-black',
             [error && 'border-red text-red focus:border-red focus:ring-red'],

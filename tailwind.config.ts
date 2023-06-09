@@ -33,6 +33,7 @@ export default {
         grey6: '#F2F2F2',
         gray1: '#333333',
         gray2: '#4F4F4F',
+        gray3: '#828282',
         table_black: '#323C47',
         table_gray: '#707683',
         green: '#007F5F',
@@ -44,8 +45,8 @@ export default {
         red: '#A9040E',
       },
       boxShadow: {
-        shadow1: '0px 0px 5px rgba(121, 118, 118, 0.2)',
-        shadow2: '0px 0px 10px 1px rgba(211, 211, 211, 0.4)',
+        s1: '0px 0px 5px rgba(121, 118, 118, 0.2)',
+        s2: '0px 0px 10px 1px rgba(211, 211, 211, 0.4)',
       },
       keyframes: {
         flicker: {

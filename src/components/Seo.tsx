@@ -9,14 +9,14 @@ const defaultMeta = {
   description:
     'Duro is a virtual queue management system that helps businesses to reduce wait times, improve customer satisfaction, and increase efficiency.',
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  url: 'https://tsnext-tw.thcl.dev',
+  url: 'duro-team-lambda-fe.vercel.app',
   type: 'website',
   robots: 'follow, index',
   /**
    * No need to be filled, will be populated with openGraph function
    * If you wish to use a normal image, just specify the path below
    */
-  image: 'https://tsnext-tw.thcl.dev/images/large-og.png',
+  image: 'duro-team-lambda-fe.vercel.app/images/large-og.png',
 };
 
 type SeoProps = {
