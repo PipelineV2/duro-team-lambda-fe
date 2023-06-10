@@ -104,12 +104,14 @@ export function Chart(props: Props) {
   const { data } = props;
   const graphOptions = useMemo(
     () => ({
-      labels: data.map((item) => item.date),
+      labels: Array.isArray(data) ? data?.map((item) => item.date) : [],
       datasets: [
         {
           fill: true,
           label: 'Progress',
-          data: data.map((item) => item.totalVisits),
+          data: Array.isArray(data)
+            ? data?.map((item) => item.totalVisits)
+            : [],
           borderColor: '#007F5F',
           backgroundColor: '#007F5F',
           borderWidth: 2,

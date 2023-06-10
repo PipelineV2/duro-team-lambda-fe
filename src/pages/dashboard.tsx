@@ -8,13 +8,10 @@ import CircularProgress from '@/components/circular-progress';
 import FullPageLoader from '@/components/full-page-loader';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
-import Table from '@/components/Table';
 import Typography from '@/components/text';
 
 import { DashboardApi } from '@/firebase/apis';
 import { graphDataReturnProps } from '@/utils/types';
-
-import data from '../utils/data.json';
 
 import ClockIcon from '~/svg/ClockIcon.svg';
 
@@ -122,13 +119,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className=''>
+          {/* <div className=''>
             <Table
               type='FREQUENT_CUSTOMERS'
               data={data}
               title='Frequent Customers: '
             />
-          </div>
+          </div> */}
         </div>
       )}
     </Layout>

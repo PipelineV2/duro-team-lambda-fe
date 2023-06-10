@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react';
+import { toast } from 'react-hot-toast';
 
 import clsxm from '@/lib/clsxm';
 import logger from '@/lib/logger';
 
 import Button from '@/components/buttons';
 import Typography from '@/components/text';
+
+import { UpdateQueueApi } from '@/firebase/apis';
 
 import { headers, TableType } from './constant';
 
@@ -15,6 +18,8 @@ type Props = {
   data: Record<string, string | number>[];
   title?: string;
   hasExport?: boolean;
+  getQueueData?: () => Promise<void>;
+  canChangeDate?: boolean;
 };
 
 /**
@@ -40,7 +45,14 @@ type Props = {
  */
 
 const Table = (props: Props) => {
-  const { type = 'INTERNAL_QUEUE', data, title, hasExport } = props;
+  const {
+    type = 'INTERNAL_QUEUE',
+    data,
+    title,
+    hasExport,
+    getQueueData,
+    canChangeDate = false,
+  } = props;
 
   const newHeaders = useMemo(() => {
     if (data.length) {
@@ -56,10 +68,16 @@ const Table = (props: Props) => {
     e: React.ChangeEvent<HTMLSelectElement>,
     ticketNumber: string
   ) => {
-    logger({
-      e: e.target.value,
-      ticketNumber,
-    });
+    UpdateQueueApi({
+      value: Number(e.target.value),
+      ticketNo: ticketNumber,
+    })
+      .then(() => {
+        getQueueData && getQueueData();
+      })
+      .catch((err: any) => {
+        toast(err.message);
+      });
   };
   const handleExportData = () => {
     logger('clicked Export');
@@ -125,6 +143,7 @@ const Table = (props: Props) => {
                               onChange={(e) =>
                                 handleChangeStatus(e, datum.ticketNo as string)
                               }
+                              disabled={!canChangeDate}
                               title='select status'
                               className={clsxm(
                                 'rounded px-2 py-1 pr-6 text-center text-xs leading-[17px]',
@@ -135,7 +154,8 @@ const Table = (props: Props) => {
                                     'bg-light-deep-blue text-deep-blue border-deep-blue',
                                   datum.status == '2' &&
                                     'bg-light-green text-green border-green',
-                                ]
+                                ],
+                                'disabled:cursor-not-allowed disabled:opacity-40'
                               )}
                             >
                               <option value={0}>on queue</option>

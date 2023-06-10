@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-
-import logger from '@/lib/logger';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 import Calendar from '@/components/calendar';
 import FullPageLoader from '@/components/full-page-loader';
@@ -17,20 +16,25 @@ const Queues = () => {
   const [status, setStatus] = useState<Tstatus>('LOADING');
   const [queueData, setQueueData] = useState([] as queueProps[]);
 
+  const getQueueData = useCallback(async () => {
+    QueueApi(startdate?.toISOString())
+      .then((res) => {
+        setStatus('SUCCESS');
+        setQueueData(res?.queueArray as queueProps[]);
+      })
+      .catch((err) => {
+        setStatus('ERROR');
+        toast.error(
+          err.message ||
+            'Error Fetching data, please check your internet connection'
+        );
+      });
+  }, [startdate]);
+
   useEffect(() => {
     let mounted = true;
     const getData = async () => {
-      QueueApi(startdate?.toISOString())
-        .then((res) => {
-          setStatus('SUCCESS');
-          // setDashboardData(res.data as TQueue);
-          setQueueData(res?.queueArray as queueProps[]);
-          logger(res);
-        })
-        .catch((err) => {
-          setStatus('ERROR');
-          logger(err);
-        });
+      getQueueData();
     };
     if (mounted) {
       getData();
@@ -39,7 +43,7 @@ const Queues = () => {
     return () => {
       mounted = true;
     };
-  }, [startdate]);
+  }, [getQueueData]);
 
   const QueueTable = useMemo(() => {
     const current = queueData.filter((item) => item.status === 0);
@@ -61,18 +65,30 @@ const Queues = () => {
               data={QueueTable.current}
               title='Current queue'
               hasExport
+              getQueueData={getQueueData}
+              canChangeDate={
+                startdate?.toDateString() === new Date().toDateString()
+              }
             />
             <Table
               type='INTERNAL_QUEUE'
               data={QueueTable.progress}
               title='In progress'
               hasExport
+              getQueueData={getQueueData}
+              canChangeDate={
+                startdate?.toDateString() === new Date().toDateString()
+              }
             />
             <Table
               type='INTERNAL_QUEUE'
               data={QueueTable.done}
               title='Done'
               hasExport
+              getQueueData={getQueueData}
+              canChangeDate={
+                startdate?.toDateString() === new Date().toDateString()
+              }
             />
           </div>
         )}
