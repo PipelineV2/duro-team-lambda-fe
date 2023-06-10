@@ -9,7 +9,7 @@ import DatabaseIcon from '~/svg/DatabaseIcon.svg';
 type Props = {
   icon?: any;
   label: string;
-  stat: number | string;
+  stat: number;
 };
 
 const Card = (props: Props) => {

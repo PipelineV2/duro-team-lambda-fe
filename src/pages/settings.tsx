@@ -142,8 +142,8 @@ const Settings = () => {
                     </Typography>
 
                     <div className='flex gap-4'>
-                      <Checkbox value='yes' label='Yes' />
-                      <Checkbox value='no' label='No' />
+                      <Checkbox name='yes' label='Yes' />
+                      <Checkbox name='no' label='No' />
                     </div>
                   </div>
 

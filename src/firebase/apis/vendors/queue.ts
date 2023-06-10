@@ -8,9 +8,9 @@ import { queueProps } from '@/utils/types';
 
 // Get user details
 
-const QueueApi = async (date: string) => {
+const QueueApi = async (date: string = new Date().toISOString()) => {
   const queueArray: queueProps[] = [];
-  let data: queueProps[] = [];
+  const data: queueProps[] = [];
   let sortedArray: queueProps[] = [];
   try {
     const user = await auth.currentUser;
@@ -41,15 +41,12 @@ const QueueApi = async (date: string) => {
           sortedArray = queueArray.sort(
             (a, b) => a.queueNumber - b.queueNumber
           );
-          if (date !== '') {
-            sortedArray
-              .filter((doc) => doc.date === date)
-              .map((d) => {
-                data.push(d);
-              });
-          } else {
-            data = sortedArray;
-          }
+
+          sortedArray
+            .filter((doc) => doc.date === dateFormaterString(date))
+            .map((d) => {
+              data.push(d);
+            });
         }
 
         return {

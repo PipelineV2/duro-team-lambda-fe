@@ -6,7 +6,7 @@ import { auth, db } from '@/firebase/FirebaseStore';
 import { availProps, availReturnDataProps } from '@/utils/types';
 
 // Availability Auth
-const AvailabilityApi = async (): Promise<availReturnDataProps | void> => {
+const AvailabilityApi = async (): Promise<availReturnDataProps | undefined> => {
   try {
     const user = await auth.currentUser;
     if (user) {

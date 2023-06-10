@@ -3,12 +3,10 @@ import { collection, getDocs, query, where } from '@firebase/firestore';
 
 import { db } from '@/firebase/FirebaseStore';
 import { dateFormaterString } from '@/utils';
-import { queueLinkReturnDataProps, queueListDataProps } from '@/utils/types';
+import { queueListDataProps } from '@/utils/types';
 // Get user details
 
-const QueueListApi = async (
-  formLinkID: string
-): Promise<queueLinkReturnDataProps | void> => {
+const QueueListApi = async (formLinkID: string) => {
   const queueArray: queueListDataProps[] = [];
   const data: queueListDataProps[] = [];
   let sortedArray: queueListDataProps[] = [];

@@ -10,7 +10,7 @@ import {
 import { signOut } from 'firebase/auth';
 
 import { auth, db } from '@/firebase/FirebaseStore';
-import { changeKeyToTrue } from '@/utils';
+import { changeKeyToTrueV2 } from '@/utils';
 import { availReturnDataProps } from '@/utils/types';
 import { availProps, updateAvailabilityProps } from '@/utils/types';
 // Availability Auth
@@ -38,7 +38,7 @@ const UpdateAvailabilityApi = async ({
         const availRef = doc(db, 'Vendors', user.uid);
         availData.closingHour = closingHour;
         availData.openingHour = openingHour;
-        changeKeyToTrue(availData.currentOperationStatus, operation);
+        changeKeyToTrueV2(availData.currentOperationStatus, operation);
         availData.workingDays[0] = {
           monday: workingDays.monday,
           tuesday: workingDays.tuesday,
@@ -48,6 +48,16 @@ const UpdateAvailabilityApi = async ({
           saturday: workingDays.saturday,
           sunday: workingDays.sunday,
         };
+
+        // console.log({
+        //   availData,
+        //   changeKeyToTrueV2: changeKeyToTrueV2(
+        //     availData.currentOperationStatus,
+        //     operation
+        //   ),
+        //   operation,
+        // });
+
         await setDoc(
           availRef,
           {

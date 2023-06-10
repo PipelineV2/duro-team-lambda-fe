@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 import Button from '@/components/buttons/Button';
@@ -7,6 +8,7 @@ interface Props {
   title: string;
   text: string;
   number: string;
+  vendorId: string;
 }
 
 // Funtion will be removed
@@ -14,7 +16,7 @@ const viewQueue = () => {
   // console.log(viewQueue)
 };
 
-const Modal: React.FC<Props> = ({ title, text, number }) => {
+const Modal: React.FC<Props> = ({ title, text, number, vendorId }) => {
   return (
     <div className=' fixed inset-0 z-50 grid items-center justify-center bg-black bg-opacity-80 text-center'>
       <div className=' shadow-shadow2 w-[20rem] rounded-md bg-white p-[1rem]'>
@@ -28,13 +30,15 @@ const Modal: React.FC<Props> = ({ title, text, number }) => {
           {number}
         </Typography>
 
-        <Button
-          text='See current queue'
-          variant='primary'
-          isFullwidth={true}
-          size='large'
-          onClick={() => viewQueue()}
-        />
+        <Link href={`/live/${vendorId}`}>
+          <Button
+            text='See current queue'
+            variant='primary'
+            isFullwidth={true}
+            size='large'
+            onClick={() => viewQueue()}
+          />
+        </Link>
       </div>
     </div>
   );

@@ -23,7 +23,11 @@ const VendorFormDetailsApi = async (
         phoneNumber: querySnapshot.docs[0].data().phoneNumber,
         businessName: querySnapshot.docs[0].data().businessName,
         isOperating:
-          querySnapshot.docs[0].data().currentOperationStatus['operation'],
+          querySnapshot.docs[0].data().currentOperationStatus[0]['operation'],
+        isOnBreak:
+          querySnapshot.docs[0].data().currentOperationStatus[0]['break'],
+        isClosed:
+          querySnapshot.docs[0].data().currentOperationStatus[0]['closed'],
         isWorkingDay: querySnapshot.docs[0].data().workingDays[0][weekday],
         isWorkHours: isWorkingHours(
           timeConverter(querySnapshot.docs[0].data().openingHour),
