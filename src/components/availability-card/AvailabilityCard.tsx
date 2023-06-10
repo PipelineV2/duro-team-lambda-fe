@@ -1,6 +1,7 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { RiPencilLine } from 'react-icons/ri';
 import * as Yup from 'yup';
 
@@ -10,10 +11,13 @@ import logger from '@/lib/logger';
 import Button from '@/components/buttons';
 import Checkbox from '@/components/checkbox';
 import Select from '@/components/select';
+import Status, {
+  currentOperationStatusProps,
+} from '@/components/status/Status';
 import Typography from '@/components/text';
 
+import { UpdateAvailabilityApi } from '@/firebase/apis';
 import { TworkingDaysProps } from '@/pages/availability';
-import { updateAvailabilityProps } from '@/utils/types';
 
 const days = [
   {
@@ -53,58 +57,73 @@ const days = [
   },
 ];
 
-interface Values {
+interface Values extends TworkingDaysProps {
   openingHour: string;
   closingHour: string;
+  currentOperationStatus: string;
 }
 
 export const validationSchema = Yup.object().shape({
   openingHour: Yup.string().required('Opening Hour is required'),
   closingHour: Yup.string().required('Closing Hour is required'),
+  currentOperationStatus: Yup.string().required('A radio option is required'),
 });
 
 interface IAvalabilityProps {
-  handleUpdateAvailability: ({
-    type,
-    value,
-  }: updateAvailabilityProps) => Promise<void>;
+  operationStatus: currentOperationStatusProps;
   avalabilityValues: {
     closingHour: string;
     openingHour: string;
     subscribed: boolean;
     workingDays: TworkingDaysProps;
   };
+  handleStatus: (status: string) => void;
 }
 
 const AvailabilityCard = (props: IAvalabilityProps) => {
+  const [status, setStatus] = useState('IDLE');
+
   const {
-    handleUpdateAvailability,
     avalabilityValues: { closingHour, openingHour, subscribed, workingDays },
+    operationStatus,
+    handleStatus,
   } = props;
   const [isEditing, setIsEditing] = useState(false);
 
+  // logger({ workingDays });
   const handleEditing = () => {
     setIsEditing(false);
   };
 
   const submitForm = async (values: Values, actions: FormikHelpers<Values>) => {
-    //  /set the values to context for later retrival
-    // setUserRegistrationDetails({ ...values });
-    logger({ values, actions });
+    setStatus('LOADING');
+    const {
+      closingHour,
+      currentOperationStatus: operation,
+      openingHour,
+      ...workingDays
+    } = values;
+
+    try {
+      const result = await UpdateAvailabilityApi({
+        closingHour,
+        openingHour,
+        workingDays,
+        operation,
+      });
+      setStatus('DATA');
+      if (result) {
+        toast.success(result?.message);
+      }
+    } catch (error: any) {
+      setStatus('ERROR');
+
+      toast.error(error?.message);
+    }
   };
 
-  logger({ closingHour, openingHour });
-
   const handleChange = async (data: string) => {
-    try {
-      const result = await handleUpdateAvailability({
-        type: 'workingDays',
-        value: data,
-      });
-      // console.log({ result });
-    } catch (error) {
-      // console.log('error', error);
-    }
+    logger({ data });
   };
 
   return (
@@ -112,16 +131,24 @@ const AvailabilityCard = (props: IAvalabilityProps) => {
       initialValues={{
         openingHour: openingHour || '',
         closingHour: closingHour || '',
+        currentOperationStatus:
+          Object.keys(operationStatus).find(
+            (item) => !!operationStatus[item]
+          ) || '',
+        ...workingDays,
       }}
       validationSchema={validationSchema}
+      enableReinitialize
       onSubmit={(values, actions) => {
         submitForm(values, actions);
       }}
     >
-      {(props: FormikHelpers<Values>) => {
+      {(props: FormikProps<Values>) => {
         return (
           <Form>
             {JSON.stringify(props, null, 2)}
+            <Status />
+
             <div className=' shadow-s2 mt-5 rounded-md bg-white p-3 md:mt-8 md:p-8'>
               <div className=' flex items-start justify-between'>
                 <div className=''>
@@ -155,18 +182,17 @@ const AvailabilityCard = (props: IAvalabilityProps) => {
                   <Select
                     label=''
                     placeholder='Select Opening Hour'
-                    options={['8:00 am', '9:00 am', '10:00 am', '11:00 am']}
+                    options={[
+                      '1:00 am',
+                      '2:00am',
+                      '8:00 am',
+                      '9:00 am',
+                      '10:00 am',
+                      '11:00 am',
+                    ]}
                     className='border-grey5 text-grey1'
                     name='openingHour'
                     id='openingHour'
-                    value={openingHour}
-                    onChange={(e) => {
-                      // console.log(e);
-                    }}
-                    onChangeCapture={(e) => {
-                      // console.log(e);
-                      logger({ e });
-                    }}
                   />
                   <Typography variant='body2' className='self-center'>
                     to
@@ -197,7 +223,7 @@ const AvailabilityCard = (props: IAvalabilityProps) => {
                 </Typography>
 
                 <div className=' border-grey5 grid max-w-[250px] grid-cols-1 rounded-lg  border md:max-w-full md:grid-cols-7'>
-                  {days.map((e, index) => (
+                  {days?.map((e, index) => (
                     <div
                       className={clsxm(
                         'border-r-grey5 rounded-lg border-b p-[2rem] md:border-b-0 md:border-r',
@@ -208,9 +234,12 @@ const AvailabilityCard = (props: IAvalabilityProps) => {
                       <Checkbox
                         label={e.day}
                         value={e.value}
+                        name={e.value}
                         isRow={false}
-                        onChange={handleChange}
-                        checked={(workingDays as any)[e.value]}
+                        checked={
+                          (props.values[e.value as keyof Values] as boolean) ||
+                          false
+                        }
                       />
                     </div>
                   ))}
@@ -219,11 +248,12 @@ const AvailabilityCard = (props: IAvalabilityProps) => {
 
               <Button
                 text='Save'
-                onClick={handleEditing}
+                onClick={() => props.handleSubmit()}
                 variant='primary'
                 className={clsxm('mt-[2rem] px-7 transition-all', [
                   isEditing ? 'visible' : 'invisible',
                 ])}
+                isLoading={status === 'LOADING'}
               />
             </div>
           </Form>

@@ -1,15 +1,17 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
+
+import logger from '@/lib/logger';
 
 import AvailabilityCard from '@/components/availability-card';
 import FullPageLoader from '@/components/full-page-loader';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
-import Status from '@/components/status';
 import { currentOperationStatusProps } from '@/components/status/Status';
 
-import { AvailabilityApi, UpdateAvailabilityApi } from '@/firebase/apis';
-import { availReturnDataProps, updateAvailabilityProps } from '@/utils/types';
+import { AvailabilityApi } from '@/firebase/apis';
+import { availReturnDataProps } from '@/utils/types';
 
 export type TworkingDaysProps = {
   friday: boolean;
@@ -27,6 +29,9 @@ const Availability = () => {
   const [availabilityData, setAvailabilityData] = useState(
     {} as availReturnDataProps
   );
+  const [operationStatus, setOperationStatus] = useState(
+    {} as currentOperationStatusProps
+  );
 
   const getAvailability = useCallback(async () => {
     try {
@@ -38,7 +43,8 @@ const Availability = () => {
         setStatus('ERROR');
       } else {
         setAvailabilityData(result as availReturnDataProps);
-        // console.log(result);
+        logger({ result });
+        setOperationStatus(result!.data!.currentOperationStatus?.[0] || {});
         setStatus('SUCCESS');
       }
     } catch (error: any) {
@@ -63,8 +69,6 @@ const Availability = () => {
   const subscribed = availabilityData?.data?.subscribed || false;
   const workingDays = (availabilityData?.data?.workingDays?.[0] ||
     {}) as TworkingDaysProps;
-  const currentOperationStatus = (availabilityData?.data
-    ?.currentOperationStatus?.[0] || {}) as currentOperationStatusProps;
 
   const avalabilityValues = {
     closingHour,
@@ -73,24 +77,38 @@ const Availability = () => {
     workingDays,
   };
 
-  const handleUpdateAvailability = useCallback(
-    async ({ type, value }: updateAvailabilityProps) => {
-      try {
-        const result = await UpdateAvailabilityApi({
-          type,
-          value,
-        });
-        if (result === undefined) {
-          toast.error('Error updating availability');
+  const handleStatus = useCallback(
+    (status: string) => {
+      const newOperationStatus = { ...operationStatus };
+      Object.keys(newOperationStatus).forEach((val) => {
+        if (status !== val) {
+          return (newOperationStatus[val] = false);
         }
-        toast.success('Availability updated successfully');
-        getAvailability();
-      } catch (error: any) {
-        toast.error('Error updating availability');
-      }
+        return (newOperationStatus[val] = true);
+      });
+      setOperationStatus(newOperationStatus);
     },
-    [getAvailability]
+    [operationStatus]
   );
+
+  // const handleUpdateAvailability = useCallback();
+  // async ({ type, value }: updateAvailabilityProps) => {
+  //   try {
+  //     const result = await UpdateAvailabilityApi({
+  //       type,
+  //       value,
+  //     });
+  //     if (result === undefined) {
+  //       toast.error('Error updating availability');
+  //     }
+  //     toast.success('Availability updated successfully');
+  //     getAvailability();
+  //   } catch (error: any) {
+  //     toast.error('Error updating availability');
+  //   }
+  // }
+  // ,
+  // [getAvailability]
 
   return (
     <Layout>
@@ -101,13 +119,10 @@ const Availability = () => {
       {status === 'LOADING' && <FullPageLoader />}
       {status === 'SUCCESS' && (
         <>
-          <Status
-            currentOperationStatus={currentOperationStatus}
-            handleUpdateAvailability={handleUpdateAvailability}
-          />
           <AvailabilityCard
+            operationStatus={operationStatus}
             avalabilityValues={avalabilityValues}
-            handleUpdateAvailability={handleUpdateAvailability}
+            handleStatus={handleStatus}
           />
         </>
       )}

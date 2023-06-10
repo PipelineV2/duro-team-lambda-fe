@@ -29,9 +29,10 @@ const BookingScreen = () => {
         const result = await VendorFormDetailsApi(
           router.query.bookingId as string
         );
-        if (result === undefined) {
+        if (result === undefined || !result.vendorData) {
           toast.error(
-            'Application for this booking has either closed, expired or incorrect. please try with a correct link'
+            result?.message ||
+              'Application for this booking has either closed, expired or incorrect. please try with a correct link'
           );
           return setTimeout(() => router.push('/error'), 3000);
         } else {
@@ -39,6 +40,7 @@ const BookingScreen = () => {
           setStatus('SUCCESS');
         }
       } catch (error: any) {
+        toast.error(error.message);
         setStatus('ERROR');
       }
     };

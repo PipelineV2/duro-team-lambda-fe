@@ -1,11 +1,8 @@
 import React from 'react';
-
-import logger from '@/lib/logger';
+import * as Yup from 'yup';
 
 import Checkbox from '@/components/checkbox';
 import Typography from '@/components/text';
-
-import { updateAvailabilityProps } from '@/utils/types';
 
 export type currentOperationStatusProps = {
   [key: string]: boolean;
@@ -14,38 +11,13 @@ export type currentOperationStatusProps = {
   operation: boolean;
 };
 
-type StatusProps = {
-  currentOperationStatus: currentOperationStatusProps;
-  handleUpdateAvailability: ({
-    type,
-    value,
-  }: updateAvailabilityProps) => Promise<void>;
-};
+export const validationSchema = Yup.object().shape({
+  currentOperationStatus: Yup.string().required('A radio option is required'),
+});
 
-const Status = ({
-  currentOperationStatus,
-  handleUpdateAvailability,
-}: StatusProps) => {
-  const {
-    break: isBreak,
-    closed: isClosed,
-    operation: isOperation,
-  } = currentOperationStatus;
-
-  const handleChange = async (data: string) => {
-    try {
-      const result = await handleUpdateAvailability({
-        type: 'operation',
-        value: data,
-      });
-      logger({ result });
-      // console.log({ result });
-    } catch (error) {
-      // console.log('error', error);
-    }
-  };
+const Status = () => {
   return (
-    <div>
+    <>
       <div className=' mt-[3rem] flex flex-col gap-4 lg:flex-row  lg:gap-8'>
         <Typography variant='body2' className='text-grey1'>
           Tell the status of your operations
@@ -53,29 +25,29 @@ const Status = ({
 
         <div className=' flex flex-wrap gap-4 lg:gap-8'>
           <Checkbox
+            name='currentOperationStatus'
+            label='Operation'
+            type='radio'
             value='operation'
-            label='Operating'
-            checked={isOperation}
-            onChange={handleChange}
             isRow={true}
           />
           <Checkbox
-            checked={isBreak}
-            onChange={handleChange}
             value='break'
+            type='radio'
+            name='currentOperationStatus'
             label='Break'
             isRow={true}
           />
           <Checkbox
-            checked={isClosed}
-            onChange={handleChange}
+            name='currentOperationStatus'
             value='closed'
+            type='radio'
             label='Closed'
             isRow={true}
           />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

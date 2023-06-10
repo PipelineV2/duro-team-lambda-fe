@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 import Button from '@/components/buttons/Button';
@@ -28,13 +29,15 @@ const Modal: React.FC<Props> = ({ title, text, number }) => {
           {number}
         </Typography>
 
-        <Button
-          text='See current queue'
-          variant='primary'
-          isFullwidth={true}
-          size='large'
-          onClick={() => viewQueue()}
-        />
+        <Link href='/live'>
+          <Button
+            text='See current queue'
+            variant='primary'
+            isFullwidth={true}
+            size='large'
+            onClick={() => viewQueue()}
+          />
+        </Link>
       </div>
     </div>
   );

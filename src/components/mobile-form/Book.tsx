@@ -1,10 +1,14 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import { Form, Formik, FormikProps } from 'formik';
-import React from 'react';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
 
 import Button from '@/components/buttons';
+import Modal from '@/components/modal';
 
+import { JoinQueueApi } from '@/firebase/apis';
 import { TVendorDataProps } from '@/utils/types';
 
 import Input from '../input';
@@ -39,13 +43,46 @@ type Props = {
 };
 
 const Book = (props: Props) => {
-  const { businessName, isOperating, isWorkHours, isWorkingDay, phoneNumber } =
-    props.vendor;
-  // console.log(props);
-  const submitForm = async (values: IValues) => {
+  const params = useRouter();
+
+  const [status, setStatus] = useState('IDLE');
+
+  const businessName = props?.vendor?.businessName;
+  const isOperating = props?.vendor?.isOperating;
+  const phoneNumber = props?.vendor?.phoneNumber;
+  const isClosed = props?.vendor?.isClosed;
+  const isOnBreak = props?.vendor?.isOnBreak;
+
+  const submitForm = async (
+    values: IValues,
+    actions: FormikHelpers<IValues>
+  ) => {
     //  /set the values to context for later retrival
     // setUserRegistrationDetails({ ...values });
     // goToNextStep();
+    setStatus('LOADING');
+    try {
+      const result = await JoinQueueApi({
+        name: values.firstName,
+        phoneNumber,
+        purpose: values.purposeOfVisit,
+        formLink: (params?.query?.bookingId || '') as string,
+      });
+
+      if (result?.status >= 200 && result?.status < 300) {
+        setStatus('DATA');
+        return toast.success(result?.message);
+      } else {
+        setStatus('ERROR');
+        return toast.error(result?.message);
+      }
+    } catch (error: any) {
+      setStatus('ERROR');
+
+      return toast.error(error?.message);
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   return (
@@ -62,9 +99,15 @@ const Book = (props: Props) => {
         </Typography>
 
         <div className=' flex  flex-col justify-between'>
-          {!isOperating && (
+          {isClosed && (
             <Typography variant='body1' className=' mb-[2rem] text-center'>
-              This business is currently not operating
+              This business is currently not operating or is closed
+            </Typography>
+          )}
+
+          {isOnBreak && (
+            <Typography variant='body1' className=' mb-[2rem] text-center'>
+              This business is currently on break, please try later
             </Typography>
           )}
           {isOperating && (
@@ -75,8 +118,8 @@ const Book = (props: Props) => {
                 purposeOfVisit: '',
               }}
               validationSchema={validationSchema}
-              onSubmit={(values) => {
-                submitForm(values);
+              onSubmit={(values, actions) => {
+                submitForm(values, actions);
               }}
             >
               {(props: FormikProps<IValues>) => (
@@ -113,6 +156,7 @@ const Book = (props: Props) => {
                       size='large'
                       isFullwidth={true}
                       onClick={() => props.handleSubmit()}
+                      isLoading={status === 'LOADING'}
                     />
                   </div>
                 </Form>
@@ -121,6 +165,13 @@ const Book = (props: Props) => {
           )}
         </div>
       </div>
+      {status === 'DATA' && (
+        <Modal
+          title='Successful!'
+          text='You have booked a spot on the queue. Your number is:'
+          number='05'
+        />
+      )}
     </main>
   );
 };

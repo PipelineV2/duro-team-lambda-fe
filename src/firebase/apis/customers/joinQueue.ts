@@ -30,7 +30,7 @@ const JoinQueueApi = async ({
     const weekday = getWeekday(new Date());
     const vendorSnapshot = await getDocs(vendorQuery);
     const isOperating: boolean =
-      vendorSnapshot.docs[0].data().currentOperationStatus['operation'];
+      vendorSnapshot.docs[0].data().currentOperationStatus[0]['operation'];
     const isWorkingDay: boolean =
       vendorSnapshot.docs[0].data().workingDays[0][weekday];
     const isWorkHours: boolean = isWorkingHours(
