@@ -40,8 +40,6 @@ const Input = (props: IInputProps) => {
     return setIsPasswordShown((shown) => !shown);
   };
 
-  // console.log({ field, meta, helpers });
-
   return (
     <div className={clsxm('block w-full')} style={style}>
       <label

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { toast } from 'react-hot-toast';
 
 import clsxm from '@/lib/clsxm';
 import logger from '@/lib/logger';
@@ -6,14 +7,19 @@ import logger from '@/lib/logger';
 import Button from '@/components/buttons';
 import Typography from '@/components/text';
 
+import { UpdateQueueApi } from '@/firebase/apis';
+
 import { headers, TableType } from './constant';
 
 import FileIcon from '~/svg/FileIcon.svg';
+
 type Props = {
   type: TableType;
   data: Record<string, string | number>[];
   title?: string;
   hasExport?: boolean;
+  getQueueData?: () => Promise<void>;
+  canChangeDate?: boolean;
 };
 
 /**
@@ -39,10 +45,17 @@ type Props = {
  */
 
 const Table = (props: Props) => {
-  const { type = 'INTERNAL_QUEUE', data, title, hasExport } = props;
+  const {
+    type = 'INTERNAL_QUEUE',
+    data,
+    title,
+    hasExport,
+    getQueueData,
+    canChangeDate = false,
+  } = props;
 
   const newHeaders = useMemo(() => {
-    if (data) {
+    if (data.length) {
       const itemInHeader = Object?.keys(data[0]);
       return headers.filter(
         (item) =>
@@ -55,10 +68,16 @@ const Table = (props: Props) => {
     e: React.ChangeEvent<HTMLSelectElement>,
     ticketNumber: string
   ) => {
-    logger({
-      e: e.target.value,
-      ticketNumber,
-    });
+    UpdateQueueApi({
+      value: Number(e.target.value),
+      ticketNo: ticketNumber,
+    })
+      .then(() => {
+        getQueueData && getQueueData();
+      })
+      .catch((err: any) => {
+        toast(err.message);
+      });
   };
   const handleExportData = () => {
     logger('clicked Export');
@@ -82,7 +101,7 @@ const Table = (props: Props) => {
         )}
       </div>
       <div className='max-h-[500px] overflow-auto'>
-        {data?.length && (
+        {data?.length ? (
           <table className='w-full border-collapse border-spacing-6'>
             <thead>
               <tr className='border-grey5 border-b '>
@@ -124,6 +143,7 @@ const Table = (props: Props) => {
                               onChange={(e) =>
                                 handleChangeStatus(e, datum.ticketNo as string)
                               }
+                              disabled={!canChangeDate}
                               title='select status'
                               className={clsxm(
                                 'rounded px-2 py-1 pr-6 text-center text-xs leading-[17px]',
@@ -134,7 +154,8 @@ const Table = (props: Props) => {
                                     'bg-light-deep-blue text-deep-blue border-deep-blue',
                                   datum.status == '2' &&
                                     'bg-light-green text-green border-green',
-                                ]
+                                ],
+                                'disabled:cursor-not-allowed disabled:opacity-40'
                               )}
                             >
                               <option value={0}>on queue</option>
@@ -154,10 +175,10 @@ const Table = (props: Props) => {
               })}
             </tbody>
           </table>
-        )}
-        {!data.length && (
+        ) : null}
+        {!data.length ? (
           <div className='max-h-32 p-10 text-center'>No data</div>
-        )}
+        ) : null}
       </div>
     </div>
   );

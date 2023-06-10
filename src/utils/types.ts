@@ -94,6 +94,8 @@ export type TVendorDataProps = {
   isOperating: boolean;
   isWorkingDay: boolean;
   isWorkHours: boolean;
+  isClosed: boolean;
+  isOnBreak: boolean;
 };
 export type vendorReturnDataProps = {
   status: number;

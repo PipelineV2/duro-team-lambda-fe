@@ -1,10 +1,14 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import { Form, Formik, FormikProps } from 'formik';
-import React from 'react';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
 
 import Button from '@/components/buttons';
+import Modal from '@/components/modal';
 
+import { JoinQueueApi } from '@/firebase/apis';
 import { TVendorDataProps } from '@/utils/types';
 
 import Input from '../input';
@@ -39,13 +43,45 @@ type Props = {
 };
 
 const Book = (props: Props) => {
-  const { businessName, isOperating, isWorkHours, isWorkingDay, phoneNumber } =
-    props.vendor;
+  const params = useRouter();
 
-  const submitForm = async (values: IValues) => {
-    //  /set the values to context for later retrival
-    // setUserRegistrationDetails({ ...values });
-    // goToNextStep();
+  const [status, setStatus] = useState('IDLE');
+  const [queueNumber, setQueueNumber] = useState<number | undefined>();
+
+  const businessName = props?.vendor?.businessName;
+  const isOperating = props?.vendor?.isOperating;
+  const phoneNumber = props?.vendor?.phoneNumber;
+  const isClosed = props?.vendor?.isClosed;
+  const isOnBreak = props?.vendor?.isOnBreak;
+
+  const submitForm = async (
+    values: IValues,
+    actions: FormikHelpers<IValues>
+  ) => {
+    setStatus('LOADING');
+    try {
+      const result = await JoinQueueApi({
+        name: values.firstName,
+        phoneNumber: values.phoneNumber,
+        purpose: values.purposeOfVisit,
+        formLink: (params?.query?.bookingId || '') as string,
+      });
+
+      if (result && result?.status >= 200 && result?.status < 300) {
+        setStatus('DATA');
+        setQueueNumber(result?.queueNumber);
+        return toast.success(result?.message);
+      } else {
+        setStatus('ERROR');
+        return toast.error((result && result?.message) || '');
+      }
+    } catch (error: any) {
+      setStatus('ERROR');
+
+      return toast.error(error?.message);
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   return (
@@ -62,58 +98,80 @@ const Book = (props: Props) => {
         </Typography>
 
         <div className=' flex  flex-col justify-between'>
-          <Formik
-            initialValues={{
-              firstName: '',
-              phoneNumber: '',
-              purposeOfVisit: '',
-            }}
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              submitForm(values);
-            }}
-          >
-            {(props: FormikProps<IValues>) => (
-              <Form>
-                <div className='flex flex-col gap-4'>
-                  <Input
-                    label='First name'
-                    placeholder='First name'
-                    name='firstName'
-                    className='border-grey5 text-grey1'
-                  />
-                  <Input
-                    label='Phone number'
-                    placeholder='Phone number'
-                    name='phoneNumber'
-                    className='border-grey5 text-grey1'
-                  />
-                  <Select
-                    label='Purpose of visit'
-                    name='purposeOfVisit'
-                    className='border-grey5 text-grey1'
-                    placeholder='Purpose of visit'
-                    options={[
-                      'Account creation',
-                      'Consultation',
-                      'File a complain',
-                    ]}
-                  />
+          {isClosed && (
+            <Typography variant='body1' className=' mb-[2rem] text-center'>
+              This business is currently not operating or is closed
+            </Typography>
+          )}
 
-                  <Button
-                    text='Join the queue'
-                    variant='primary'
-                    className='mt-1 text-center'
-                    size='large'
-                    isFullwidth={true}
-                    onClick={() => props.handleSubmit()}
-                  />
-                </div>
-              </Form>
-            )}
-          </Formik>
+          {isOnBreak && (
+            <Typography variant='body1' className=' mb-[2rem] text-center'>
+              This business is currently on break, please try later
+            </Typography>
+          )}
+          {isOperating && (
+            <Formik
+              initialValues={{
+                firstName: '',
+                phoneNumber: '',
+                purposeOfVisit: '',
+              }}
+              validationSchema={validationSchema}
+              onSubmit={(values, actions) => {
+                submitForm(values, actions);
+              }}
+            >
+              {(props: FormikProps<IValues>) => (
+                <Form>
+                  <div className='flex flex-col gap-4'>
+                    <Input
+                      label='First name'
+                      placeholder='First name'
+                      name='firstName'
+                      className='border-grey5 text-grey1'
+                    />
+                    <Input
+                      label='Phone number'
+                      placeholder='Phone number'
+                      name='phoneNumber'
+                      className='border-grey5 text-grey1'
+                    />
+                    <Select
+                      label='Purpose of visit'
+                      name='purposeOfVisit'
+                      className='border-grey5 text-grey1'
+                      placeholder='Select'
+                      options={[
+                        'Account creation',
+                        'Consultation',
+                        'File a complain',
+                      ]}
+                    />
+
+                    <Button
+                      text='Join the queue'
+                      variant='primary'
+                      className='mt-1 text-center'
+                      size='large'
+                      isFullwidth={true}
+                      onClick={() => props.handleSubmit()}
+                      isLoading={status === 'LOADING'}
+                    />
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          )}
         </div>
       </div>
+      {status === 'DATA' && (
+        <Modal
+          title='Successful!'
+          text='You have booked a spot on the queue. Your number is:'
+          number={queueNumber?.toString() || ''}
+          vendorId={params?.query?.bookingId as string}
+        />
+      )}
     </main>
   );
 };

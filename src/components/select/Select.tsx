@@ -15,7 +15,7 @@ export interface ISelectProps
 
 const Select = (props: ISelectProps) => {
   const [field, meta, helpers] = useField(props);
-  const { label, placeholder, options, className } = props;
+  const { label, placeholder, options, className, name } = props;
 
   const onChange = (e: any) => {
     helpers.setTouched(true);
@@ -37,7 +37,7 @@ const Select = (props: ISelectProps) => {
           {...field}
           title={label}
           id={label}
-          name={label}
+          name={name}
           onChange={onChange}
           className={clsxm(
             'w-full appearance-none caret-transparent',

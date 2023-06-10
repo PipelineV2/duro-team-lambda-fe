@@ -110,12 +110,14 @@ export default function HomePage() {
                       className='px-4 py-2.5 text-white hover:bg-none hover:text-black'
                     />
                   </Link>
-                  <Button
-                    text='Start Free Trial'
-                    onClick={() => undefined}
-                    variant='primary'
-                    className='bg-[#46FACC] px-4 py-2.5 text-black'
-                  />
+                  <Link href='/signup'>
+                    <Button
+                      text='Start Free Trial'
+                      onClick={() => undefined}
+                      variant='primary'
+                      className='bg-[#46FACC] px-4 py-2.5 text-black'
+                    />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -138,12 +140,14 @@ export default function HomePage() {
               </Typography>
 
               <div className='flex gap-4'>
-                <Button
-                  text='Start Free Trial'
-                  onClick={() => undefined}
-                  variant='primary'
-                  className='bg-[#46FACC] p-4 text-black md:px-[51px] md:py-[18px]'
-                />
+                <Link href='/signup'>
+                  <Button
+                    text='Start Free Trial'
+                    onClick={() => undefined}
+                    variant='primary'
+                    className='bg-[#46FACC] p-4 text-black md:px-[51px] md:py-[18px]'
+                  />
+                </Link>
                 <Button
                   text='View Plans'
                   onClick={() => undefined}

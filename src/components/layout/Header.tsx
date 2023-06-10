@@ -3,6 +3,7 @@ import * as React from 'react';
 import Button from '@/components/buttons/Button';
 import Typography from '@/components/text/Text';
 
+import { Dropdown } from './Dropdown';
 import { useDate } from './useDate';
 import { strings } from '../../constant/strings';
 
@@ -21,7 +22,7 @@ export default function Header() {
           {date} | {time}
         </Typography>
         <nav className='flex justify-end'>
-          <ul className='flex max-w-[150px] items-center justify-between space-x-4'>
+          <ul className='flex max-w-[250px] items-center justify-between space-x-4'>
             <li>
               <button type='button' role='button' title='Search Icon'>
                 <SearchIcon className='text-[32px]' />
@@ -33,14 +34,16 @@ export default function Header() {
               </button>
             </li>
             <li>
-              <button type='button' role='button' title='User icon'>
-                <Usericon className='text-[56px]' />
-              </button>
+              <Dropdown>
+                <button type='button' role='button' title='User icon'>
+                  <Usericon className='text-[56px]' />
+                </button>
+              </Dropdown>
             </li>
           </ul>
         </nav>
       </div>
-      <div className='border-b-grey5 gap:8 flex-wrap  items-center justify-end border-b  px-6 py-4 md:flex lg:gap-12'>
+      <div className='border-b-grey5 flex-wrap items-center  justify-end gap-8 border-b  px-6 py-4 md:flex lg:gap-12'>
         <Typography variant='body2' className='text-grey3 pb-3 lg:pb-0'>
           {TRIAL_PERIOD_TEXT}
         </Typography>

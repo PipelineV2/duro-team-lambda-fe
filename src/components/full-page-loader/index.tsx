@@ -14,7 +14,7 @@ export default function FullPageLoader() {
   return (
     <>
       <LoadingBar color='#007f5f' ref={ref} height={4} />
-      <div className=' fixed bottom-0 left-0 right-0 top-1 z-50  backdrop-blur-sm'>
+      <div className=' fixed bottom-0 left-0 right-0 top-1 z-50  bg-white  backdrop-blur-sm'>
         <div className='mx-auto mt-10 w-full max-w-md  rounded-md  p-4 '>
           <div className='flex animate-pulse space-x-4'>
             <div className='flex-1 space-y-6 py-1'>

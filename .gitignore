@@ -39,3 +39,6 @@ next-env.d.ts
 robots.txt
 sitemap.xml
 sitemap-*.xml
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat

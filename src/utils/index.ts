@@ -48,6 +48,17 @@ export const changeKeyToTrue = (obj: any, key: string) => {
   return obj;
 };
 
+export const changeKeyToTrueV2 = (obj: any, key: string) => {
+  const objArray = obj[0];
+  Object.keys(objArray).forEach((item) => {
+    if (item === key) {
+      return (objArray[item] = true);
+    }
+    return (objArray[item] = false);
+  });
+  return obj;
+};
+
 export const changeKeyToInverseBoolean = (obj: any, key: string) => {
   for (const k in obj) {
     if (k === key && obj[k] === true) {

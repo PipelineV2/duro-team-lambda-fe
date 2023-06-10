@@ -1,4 +1,5 @@
 import { onAuthStateChanged } from 'firebase/auth';
+import { useRouter } from 'next/router';
 import React, {
   createContext,
   useCallback,
@@ -59,6 +60,7 @@ export function AuthContextProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   const [user, setUser] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [userRegistrationDetails, _setUserRegistrationDetails] = useState(
@@ -82,8 +84,9 @@ export function AuthContextProvider({
     return auth.signOut().then(() => {
       setUser(null);
       setLoading(true);
+      router.reload();
     });
-  }, []);
+  }, [router]);
 
   const setUserRegistrationDetails = useCallback(
     (item: Partial<signupProps>) => {

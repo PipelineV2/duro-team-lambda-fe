@@ -15,22 +15,30 @@ import {
   isWorkingHours,
   timeConverter,
 } from '@/utils';
-import { joinQueueProps, queueReturnDataProps } from '@/utils/types';
+import { joinQueueProps } from '@/utils/types';
 // Create/Join Queue
 const JoinQueueApi = async ({
   name,
   purpose,
   phoneNumber,
   formLink,
-}: joinQueueProps): Promise<queueReturnDataProps | string | undefined> => {
+}: joinQueueProps): Promise<{
+  status: number;
+  message: string;
+  queueNumber?: number;
+}> => {
   try {
-    let returnData;
+    let returnData = {} as {
+      status: number;
+      message: string;
+      queueNumber?: number;
+    };
     const vendorDB = collection(db, 'Vendors');
     const vendorQuery = query(vendorDB, where('formLink', '==', formLink));
     const weekday = getWeekday(new Date());
     const vendorSnapshot = await getDocs(vendorQuery);
     const isOperating: boolean =
-      vendorSnapshot.docs[0].data().currentOperationStatus['operation'];
+      vendorSnapshot.docs[0].data().currentOperationStatus[0]['operation'];
     const isWorkingDay: boolean =
       vendorSnapshot.docs[0].data().workingDays[0][weekday];
     const isWorkHours: boolean = isWorkingHours(
