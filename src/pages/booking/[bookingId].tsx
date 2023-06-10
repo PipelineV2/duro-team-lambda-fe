@@ -8,7 +8,7 @@ import Book from '@/components/mobile-form';
 import { VendorFormDetailsApi } from '@/firebase/apis';
 import { TVendorDataProps } from '@/utils/types';
 
-type Tstatus = 'LOADING' | 'SUCCESS' | 'ERROR';
+export type Tstatus = 'LOADING' | 'SUCCESS' | 'ERROR';
 
 const BookingScreen = () => {
   const router = useRouter();

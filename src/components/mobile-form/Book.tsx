@@ -46,6 +46,7 @@ const Book = (props: Props) => {
   const params = useRouter();
 
   const [status, setStatus] = useState('IDLE');
+  const [queueNumber, setQueueNumber] = useState<number | undefined>();
 
   const businessName = props?.vendor?.businessName;
   const isOperating = props?.vendor?.isOperating;
@@ -57,20 +58,18 @@ const Book = (props: Props) => {
     values: IValues,
     actions: FormikHelpers<IValues>
   ) => {
-    //  /set the values to context for later retrival
-    // setUserRegistrationDetails({ ...values });
-    // goToNextStep();
     setStatus('LOADING');
     try {
       const result = await JoinQueueApi({
         name: values.firstName,
-        phoneNumber,
+        phoneNumber: values.phoneNumber,
         purpose: values.purposeOfVisit,
         formLink: (params?.query?.bookingId || '') as string,
       });
 
       if (result && result?.status >= 200 && result?.status < 300) {
         setStatus('DATA');
+        setQueueNumber(result?.queueNumber);
         return toast.success(result?.message);
       } else {
         setStatus('ERROR');
@@ -169,7 +168,8 @@ const Book = (props: Props) => {
         <Modal
           title='Successful!'
           text='You have booked a spot on the queue. Your number is:'
-          number='05'
+          number={queueNumber?.toString() || ''}
+          vendorId={params?.query?.bookingId as string}
         />
       )}
     </main>

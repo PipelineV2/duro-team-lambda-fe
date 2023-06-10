@@ -9,6 +9,7 @@ import Typography from '@/components/text';
 import { headers, TableType } from './constant';
 
 import FileIcon from '~/svg/FileIcon.svg';
+
 type Props = {
   type: TableType;
   data: Record<string, string | number>[];
@@ -42,7 +43,7 @@ const Table = (props: Props) => {
   const { type = 'INTERNAL_QUEUE', data, title, hasExport } = props;
 
   const newHeaders = useMemo(() => {
-    if (data) {
+    if (data.length) {
       const itemInHeader = Object?.keys(data[0]);
       return headers.filter(
         (item) =>
@@ -82,7 +83,7 @@ const Table = (props: Props) => {
         )}
       </div>
       <div className='max-h-[500px] overflow-auto'>
-        {data?.length && (
+        {data?.length ? (
           <table className='w-full border-collapse border-spacing-6'>
             <thead>
               <tr className='border-grey5 border-b '>
@@ -154,10 +155,10 @@ const Table = (props: Props) => {
               })}
             </tbody>
           </table>
-        )}
-        {!data.length && (
+        ) : null}
+        {!data.length ? (
           <div className='max-h-32 p-10 text-center'>No data</div>
-        )}
+        ) : null}
       </div>
     </div>
   );

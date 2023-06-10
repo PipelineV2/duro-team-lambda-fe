@@ -9,8 +9,10 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
+
+import { graphDataReturnProps } from '@/utils/types';
 
 ChartJS.register(
   CategoryScale,
@@ -42,7 +44,7 @@ export const options = {
   },
   scales: {
     y: {
-      beginAtZero: false,
+      beginAtZero: true,
       grid: {
         display: false, // Set display to false to remove the x-axis gridlines
         borderDash: [8, 4], // Set the borderDash array to specify the length and spacing of the dashes
@@ -86,7 +88,7 @@ export const data = {
   datasets: [
     {
       fill: true,
-      label: 'Dataset 2',
+      label: 'Progress',
       data: [735, 521, 812, 191, 546, 830, 313, 286, 897, 172, 660, 495],
       borderColor: '#007F5F',
       backgroundColor: '#007F5F',
@@ -95,6 +97,27 @@ export const data = {
   ],
 };
 
-export function Chart() {
-  return <Line options={options} data={data} />;
+type Props = {
+  data: graphDataReturnProps[];
+};
+export function Chart(props: Props) {
+  const { data } = props;
+  const graphOptions = useMemo(
+    () => ({
+      labels: data.map((item) => item.date),
+      datasets: [
+        {
+          fill: true,
+          label: 'Progress',
+          data: data.map((item) => item.totalVisits),
+          borderColor: '#007F5F',
+          backgroundColor: '#007F5F',
+          borderWidth: 2,
+        },
+      ],
+    }),
+    [data]
+  );
+
+  return <Line options={options} data={graphOptions} />;
 }
