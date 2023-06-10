@@ -146,7 +146,6 @@ const AvailabilityCard = (props: IAvalabilityProps) => {
       {(props: FormikProps<Values>) => {
         return (
           <Form>
-            {JSON.stringify(props, null, 2)}
             <Status />
 
             <div className=' shadow-s2 mt-5 rounded-md bg-white p-3 md:mt-8 md:p-8'>

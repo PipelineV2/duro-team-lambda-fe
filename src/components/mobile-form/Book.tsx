@@ -69,12 +69,12 @@ const Book = (props: Props) => {
         formLink: (params?.query?.bookingId || '') as string,
       });
 
-      if (result?.status >= 200 && result?.status < 300) {
+      if (result && result?.status >= 200 && result?.status < 300) {
         setStatus('DATA');
         return toast.success(result?.message);
       } else {
         setStatus('ERROR');
-        return toast.error(result?.message);
+        return toast.error((result && result?.message) || '');
       }
     } catch (error: any) {
       setStatus('ERROR');
@@ -141,7 +141,7 @@ const Book = (props: Props) => {
                       label='Purpose of visit'
                       name='purposeOfVisit'
                       className='border-grey5 text-grey1'
-                      placeholder='Purpose of visit'
+                      placeholder='Select'
                       options={[
                         'Account creation',
                         'Consultation',

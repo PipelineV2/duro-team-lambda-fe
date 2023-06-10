@@ -22,7 +22,7 @@ const JoinQueueApi = async ({
   purpose,
   phoneNumber,
   formLink,
-}: joinQueueProps): Promise<queueReturnDataProps | string | undefined> => {
+}: joinQueueProps): Promise<queueReturnDataProps | undefined> => {
   try {
     let returnData;
     const vendorDB = collection(db, 'Vendors');

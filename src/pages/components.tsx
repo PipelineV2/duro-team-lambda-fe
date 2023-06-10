@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import logger from '@/lib/logger';
 
-import AvailabilityCard from '@/components/availability-card';
 import Button from '@/components/buttons/Button';
 import Card from '@/components/card';
 import { Chart } from '@/components/chart/Chart';
@@ -111,7 +110,6 @@ export default function ComponentsPage() {
         text='You have booked a spot on the queue. Your number is:'
         number='05'
       />
-      <AvailabilityCard />
     </Layout>
   );
 }
