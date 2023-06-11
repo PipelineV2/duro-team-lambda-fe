@@ -20,6 +20,7 @@ const noAuthRequired = [
   '/reset-password',
   '/404',
   '/booking/[bookingId]',
+  '/live/[vendorId]',
 ];
 
 function MyApp({ Component, pageProps }: AppProps) {
